@@ -1,0 +1,259 @@
+swagger: '2.0'
+info:
+  title: Cookway - the way to cook
+  description: Web application for cooking lovers
+  version: 1.0.0
+  contact:
+    email: mkuncicka@gmail.com
+basePath: /api
+tags:
+  - name: Core
+    description: Endpoints connected with system core functionality
+  - name: Recipes
+    description: Endpoints connected with recipes functionality
+  - name: User
+    description: Endpoints connected with user management functionality
+schemes:
+  - http
+  - https
+paths:
+  # CORE - Security
+  /security/login:
+    post:
+      summary: Login
+      operationId: LoginHandler
+      tags:
+        - Core
+      parameters:
+        - name: content
+          description: Login data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        '200':
+          description: Login succeed
+        '403':
+          description: Login failed
+  /security/logout:
+    post:
+      summary: Logout
+      tags:
+        - Core
+      responses:
+        '200':
+          description: Logout succeed
+  # RECIPES
+  /recipes:
+    get:
+      summary: List of all recipes
+      description: List of all recipes
+      operationId: RecipesListHandler
+      tags:
+        - Recipes
+      responses:
+        '200':
+          description: List of all recipes correctly returned
+          schema:
+            $ref: '#/definitions/RecipeList'
+        '403':
+          description: Request failed
+  /recipes/filtered:
+    get:
+      summary: List of filtered recipes
+      description: List of recipes filtered by chosen property
+      operationId: FilteredRecipesListHandler
+      tags:
+        - Recipes
+      parameters:
+        - name: filterName
+          type: string
+          in: body
+          required: true
+        - name: filterContent
+          type: string
+          in: body
+          required: true
+  /recipes/user/{id}:
+    get:
+      summary: List of user's recipes
+      description: List of single user's recipes
+      operationId: UsersRecipeListHandler
+      tags:
+        - Recipes
+      responses:
+        '200':
+          description: List of user's recipes correctly returned
+          schema:
+            $ref: '#/definitions/RecipeList'
+        '400':
+          description: Bad user id given
+  /recipes/details/{id}:
+    get:
+      summary: Details of a single recipe
+      description: Details of a single recipe
+      operationId: RecipeDetailesHandler
+      tags:
+        - Recipes
+      parameters:
+        - name: id
+          description: Id of the recipe
+          in: query
+          required: true
+  /recipes/new:
+    post:
+      summary: Intention of creation a new recipe
+      description: Adds new recipe to the database
+      operationId: NewRecipeHandler
+      tags:
+        - Recipes
+    parameters:
+      - name: title
+        type: string
+        in: body
+        required: true
+      - name: ingredientsIds:
+        type: array
+        items:
+          type: integer
+      - name: customIngredients
+        type: array
+        items:
+          type: '#/definitions/CustomIngredient'
+      - name: description
+        type: string
+        in: body
+        required: false
+      - name: prescription
+        type: string
+        in: body
+        required: true
+      - name: preparationTime
+        type: integer
+        in: body
+        required: false
+      - name: preparationTimeText
+        type: string
+        in: body
+        required: false
+      - name: photoId:
+        type: integer
+        in: body
+        required: false
+definitions:
+  Login:
+    title: Login
+    description: Login parameters
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  RecipeList:
+    title: List of recipes
+    description: List of recipes
+    required:
+      - data
+      - totalCount
+    properties:
+      totalCount:
+        title: Total count of recipes
+        type: integer
+      data:
+        title: List of recipes
+        type: array
+        items:
+          $ref: '#/definitions/RecipeListItemView'
+  RecipeListItemView:
+    title: Single recipe view model
+    description: Single recipe view model presented on the list
+    required:
+      - title
+      - ingredients
+      - prescription
+    properties:
+      title:
+        title: Title of the recipe
+        type: string
+      description:
+        title: Description of the recipe
+        type: string
+      ingredients:
+        title: List of ingredients
+        type: array
+        items:
+          $ref: '#/definitions/IngredientList'
+      prescription:
+        title: Prescription
+        type: string
+      preparationTime:
+        title: Time of preparation in minutes
+        type: integer
+      preparationTimeText:
+        title: Additional text to preparation time
+        description: Text explaining what is included inpreparation time (ex: preparing 10min + cooking 30min)
+        type: string
+      author:
+        title: Author's name
+        type: string
+      photoId:
+        title: Photo's id
+        type: integer
+  IngredientList:
+    title: List of ingredients
+    description: List of ingredients
+    required:
+      - data
+      - totalCount
+    properties:
+      totalCount:
+        title: Total count of ingredients
+        type: integer
+      data:
+        title: List of ingredients
+        type: array
+        items:
+          $ref: '#/definitions/IngredientListItemView'
+  IngredientListItemView:
+    title: Single ingredient view model
+    description: Single ingredient view model presented on the list
+    required:
+      - name
+      - systemName
+      - amount
+      - unitName
+    properties:
+      name:
+        title: Name of the ingredient
+        type: string
+      systemName:
+        title: System name of the ingredient
+        type: string
+      amount:
+        title: Amount of the ingredient
+        type: float
+      unitName:
+        title: Unit of the ingredient amount
+        type: string
+  CustomIngredient:
+    title: Custom ingredient
+    required:
+      - name
+      - amount
+      - unitId
+    properties:
+      name:
+        title: Name of the ingredient
+        type: string
+      amount:
+        title: Amount of the ingredient
+        type: float
+      unitId:
+        title: Unit of the ingredient amount
+        type: integer
+
+
