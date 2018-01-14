@@ -109,7 +109,22 @@ paths:
           required: true
       responses:
         '200':
-          description: Recepie succesfuly created
+          description: Recipe succesfuly created
+  /recipes/ingredients/new:
+    post:
+      summary: Intention of creating a new ingredient
+      operationId: NewIngredientHandler
+      tags:
+        - Recipes
+      parameters:
+        - name: ingredient
+          in: body
+          schema:
+            $ref:
+          required: true
+      responses:
+        '200':
+          description: Ingredient succesfully added
   /dictionary/units:
     get:
       summary: Returns dictionary of available ingredient units
