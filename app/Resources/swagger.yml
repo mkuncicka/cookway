@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Cookway - the way to cook
-  description: Web application for cooking lovers
+  description: Web application with recipes
   version: 1.0.0
   contact:
     email: mkuncicka@gmail.com
@@ -39,6 +39,7 @@ paths:
   /security/logout:
     post:
       summary: Logout
+      operationId: LogoutHandler
       tags:
         - Core
       responses:
@@ -47,11 +48,16 @@ paths:
   # RECIPES
   /recipes:
     get:
-      summary: List of all recipes
-      description: List of all recipes
-      operationId: RecipesListHandler
+      summary: List of recipes
+      operationId: RecipeListQuery
       tags:
         - Recipes
+      parameters:
+        - name: filter
+          in: body
+          schema:
+           $ref: '#/definitions/Filter'
+          required: true
       responses:
         '200':
           description: List of all recipes correctly returned
@@ -59,29 +65,17 @@ paths:
             $ref: '#/definitions/RecipeList'
         '403':
           description: Request failed
-  /recipes/filtered:
+  /recipes/user/{id}:
     get:
-      summary: List of filtered recipes
-      description: List of recipes filtered by chosen property
-      operationId: FilteredRecipesListHandler
+      summary: List of single user's recipes
+      operationId: UsersRecipeListQuery
       tags:
         - Recipes
       parameters:
-        - name: filterName
-          type: string
-          in: body
+        - name: id
+          in: path
+          type: integer
           required: true
-        - name: filterContent
-          type: string
-          in: body
-          required: true
-  /recipes/user/{id}:
-    get:
-      summary: List of user's recipes
-      description: List of single user's recipes
-      operationId: UsersRecipeListHandler
-      tags:
-        - Recipes
       responses:
         '200':
           description: List of user's recipes correctly returned
@@ -92,55 +86,34 @@ paths:
   /recipes/details/{id}:
     get:
       summary: Details of a single recipe
-      description: Details of a single recipe
-      operationId: RecipeDetailesHandler
+      operationId: RecipeDetailesQueryHandler
       tags:
         - Recipes
       parameters:
         - name: id
-          description: Id of the recipe
-          in: query
+          in: path
+          type: integer
           required: true
+      responses:
+        '200':
+          description: Request succeed
+          schema:
+            $ref: '#/definitions/RecipeListItemView'
   /recipes/new:
     post:
-      summary: Intention of creation a new recipe
-      description: Adds new recipe to the database
+      summary: Intention of creation a new recipe - adds new recipe to the database
       operationId: NewRecipeHandler
       tags:
         - Recipes
-    parameters:
-      - name: title
-        type: string
-        in: body
-        required: true
-      - name: ingredientsIds:
-        type: array
-        items:
-          type: integer
-      - name: customIngredients
-        type: array
-        items:
-          type: '#/definitions/CustomIngredient'
-      - name: description
-        type: string
-        in: body
-        required: false
-      - name: prescription
-        type: string
-        in: body
-        required: true
-      - name: preparationTime
-        type: integer
-        in: body
-        required: false
-      - name: preparationTimeText
-        type: string
-        in: body
-        required: false
-      - name: photoId:
-        type: integer
-        in: body
-        required: false
+      parameters:
+        - name: recipe
+          in: body
+          schema:
+            $ref: '#/definitions/NewRecipe'
+          required: true
+      responses:
+        '200':
+          description: Request succeed
 definitions:
   Login:
     title: Login
@@ -195,14 +168,27 @@ definitions:
         type: integer
       preparationTimeText:
         title: Additional text to preparation time
-        description: Text explaining what is included inpreparation time (ex: preparing 10min + cooking 30min)
+        description: Text explaining what is included inpreparation time
         type: string
       author:
         title: Author's name
         type: string
-      photoId:
+      photos:
+        title: List of photos
+        type: array
+        items:
+          $ref: '#/definitions/PhotoItemView'
+        schema:
+  PhotoItemView:
+      id:
         title: Photo's id
         type: integer
+      name:
+        title: Photo's name
+        type: string
+      url:
+        title: Photo's displaying url
+        type: string
   IngredientList:
     title: List of ingredients
     description: List of ingredients
@@ -235,25 +221,52 @@ definitions:
         type: string
       amount:
         title: Amount of the ingredient
-        type: float
+        type: number
       unitName:
         title: Unit of the ingredient amount
         type: string
-  CustomIngredient:
-    title: Custom ingredient
+  Filter:
+    title: Filter
     required:
-      - name
-      - amount
-      - unitId
+      - filterName
+      - filterContent
+      - dataType
     properties:
-      name:
-        title: Name of the ingredient
+      filterName:
+        title: Filter name
         type: string
-      amount:
-        title: Amount of the ingredient
-        type: float
-      unitId:
-        title: Unit of the ingredient amount
+      filterContent:
+        title: Filter content
+        type: string
+      dataType:
+        title: Filter data type
+        type: string
+  NewRecipe:
+    title: Recipe model view
+    required:
+      - title
+      - prescription
+    properties:
+      title:
+        title: Title of the recipe
+        type: string
+      ingredientsIds:
+        title: Ingredients from database
+        type: array
+        items:
+          type: integer
+      description:
+        title: Description
+        type: string
+      prescription:
+        title: Instructions how to make a meal
+        type: string
+      preparationTime:
+        title: Time of preparation
         type: integer
-
-
+      preparationTimeText:
+        title: Additional text explaining time of preparation
+        type: string
+      photoId:
+        title: Photo of the meal
+        type: integer

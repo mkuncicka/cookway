@@ -1,0 +1,19 @@
+Cookway\Domain\Core\User:
+    type: entity
+    table: user
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            nullable: false
+        password:
+            type: string
+            nullable: false
+    oneToMany:
+        recipes:
+            targetEntity: Cookway\Domain\Recipe\Recipe
+            mappedBy: author
