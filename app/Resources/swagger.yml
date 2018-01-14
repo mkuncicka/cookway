@@ -13,6 +13,8 @@ tags:
     description: Endpoints connected with recipes functionality
   - name: User
     description: Endpoints connected with user management functionality
+  - name: Dictionary
+    description: Endpoints connected with dictionaries
 schemes:
   - http
   - https
@@ -52,12 +54,6 @@ paths:
       operationId: RecipeListQuery
       tags:
         - Recipes
-      parameters:
-        - name: filter
-          in: body
-          schema:
-           $ref: '#/definitions/Filter'
-          required: true
       responses:
         '200':
           description: List of all recipes correctly returned
@@ -86,7 +82,7 @@ paths:
   /recipes/details/{id}:
     get:
       summary: Details of a single recipe
-      operationId: RecipeDetailesQueryHandler
+      operationId: RecipeDetailesQuery
       tags:
         - Recipes
       parameters:
@@ -101,7 +97,7 @@ paths:
             $ref: '#/definitions/RecipeListItemView'
   /recipes/new:
     post:
-      summary: Intention of creation a new recipe - adds new recipe to the database
+      summary: Intention of creating a new recipe - adds new recipe to the database
       operationId: NewRecipeHandler
       tags:
         - Recipes
@@ -113,7 +109,19 @@ paths:
           required: true
       responses:
         '200':
-          description: Request succeed
+          description: Recepie succesfuly created
+  /dictionary/units:
+    get:
+      summary: Returns dictionary of available ingredient units
+      operationId: UnitDictionaryQuery
+      tags:
+        - Dictionary
+      responses:
+        '200':
+          description: Units dictionary succesfuly returned
+          schema:
+            $ref: '#/definitions/DictionaryListView'
+
 definitions:
   Login:
     title: Login
@@ -159,7 +167,7 @@ definitions:
         title: List of ingredients
         type: array
         items:
-          $ref: '#/definitions/IngredientList'
+          $ref: '#/definitions/IngredientListView'
       prescription:
         title: Prescription
         type: string
@@ -168,7 +176,7 @@ definitions:
         type: integer
       preparationTimeText:
         title: Additional text to preparation time
-        description: Text explaining what is included inpreparation time
+        description: Text explaining what is included in preparation time
         type: string
       author:
         title: Author's name
@@ -177,10 +185,25 @@ definitions:
         title: List of photos
         type: array
         items:
-          $ref: '#/definitions/PhotoItemView'
-  PhotoItemView:
+          $ref: '#/definitions/PhotoListView'
+  PhotoListView:
+    title: List of photos
+    description: List of photos
+    required:
+      - data
+      - totalCount
+    properties:
+      totalCount:
+        title: Total count of photos
+        type: integer
+      data:
+        title: List of photos
+        type: array
+        items:
+          $ref: '#/definitions/PhotoListItemView'
+  PhotoListItemView:
     title: Single photo view model
-    description: Single photo view model connected with recipe
+    description: Single photo connected with recipe
     required:
       - id
       - name
@@ -196,9 +219,9 @@ definitions:
         title: Photo's displaying url
         type: string
       isMain:
-        title: Information is it main photo of the recipe
+        title: Information if this is a main recipe's photo
         type: boolean
-  IngredientList:
+  IngredientListView:
     title: List of ingredients
     description: List of ingredients
     required:
@@ -234,22 +257,6 @@ definitions:
       unitName:
         title: Unit of the ingredient amount
         type: string
-  Filter:
-    title: Filter
-    required:
-      - filterName
-      - filterContent
-      - dataType
-    properties:
-      filterName:
-        title: Filter name
-        type: string
-      filterContent:
-        title: Filter content
-        type: string
-      dataType:
-        title: Filter data type
-        type: string
   NewRecipe:
     title: Recipe model view
     required:
@@ -279,3 +286,30 @@ definitions:
       photoId:
         title: Photo of the meal
         type: integer
+  DictionaryListView:
+    title: List of dictionary data
+    description: List of dictionary data
+    required:
+      - data
+      - totalCount
+    properties:
+      totalCount:
+        title: Total count of dictionary items
+        type: integer
+      data:
+        title: List of items
+        type: array
+        items:
+          $ref: '#/definitions/DictionaryListItemView'
+  DictionaryListItemView:
+    title: Dictionary item model view
+    required:
+      - id
+      - text
+    properties:
+      id:
+        title: Item id
+        type: integer
+      text:
+        title: Text representation of the item (ex for select purpose)
+        type: string
