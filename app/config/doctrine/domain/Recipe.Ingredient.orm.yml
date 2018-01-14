@@ -1,0 +1,27 @@
+Cookway\Domain\Recipe\Ingredient:
+    type: entity
+    table: ingredient
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            nullable: false
+        amount:
+            type: float
+            nullable: false
+    manyToOne:
+        recipe:
+            targetEntity: Cookway\Domain\Recipe\Recipe
+            inversedBy: ingredients
+            joinColumn:
+                columnName: recipe_id
+                referencedColumnName: id
+        unit:
+            targetEntity: Cookway\Domain\Recipe\Unit
+            joinColumn:
+                columnName: unit_id
+                referencedColumnName: id

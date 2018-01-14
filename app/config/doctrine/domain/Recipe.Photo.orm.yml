@@ -1,0 +1,31 @@
+Cookway\Domain\Recipe\Photo:
+    type: entity
+    table: photo
+    id:
+        id:
+          type: integer
+          generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            nullable: false
+        fileName:
+            type: string
+            nullable: false
+        path:
+            type: string
+            nullable: false
+        extension:
+            type: string
+            nullable: false
+        isMain:
+            type: boolean
+            nullable: false
+    manyToOne:
+        recipe:
+            targetEntity: Cookway\Domain\Recipe\Recipe
+            inversedBy: photos
+            joinColumn:
+                referencedColumnName: id
+                columnName: recipe_id

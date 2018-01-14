@@ -1,0 +1,315 @@
+swagger: '2.0'
+info:
+  title: Cookway - the way to cook
+  description: Web application with recipes
+  version: 1.0.0
+  contact:
+    email: mkuncicka@gmail.com
+basePath: /api
+tags:
+  - name: Core
+    description: Endpoints connected with system core functionality
+  - name: Recipes
+    description: Endpoints connected with recipes functionality
+  - name: User
+    description: Endpoints connected with user management functionality
+  - name: Dictionary
+    description: Endpoints connected with dictionaries
+schemes:
+  - http
+  - https
+paths:
+  # CORE - Security
+  /security/login:
+    post:
+      summary: Login
+      operationId: LoginHandler
+      tags:
+        - Core
+      parameters:
+        - name: content
+          description: Login data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        '200':
+          description: Login succeed
+        '403':
+          description: Login failed
+  /security/logout:
+    post:
+      summary: Logout
+      operationId: LogoutHandler
+      tags:
+        - Core
+      responses:
+        '200':
+          description: Logout succeed
+  # RECIPES
+  /recipes:
+    get:
+      summary: List of recipes
+      operationId: RecipeListQuery
+      tags:
+        - Recipes
+      responses:
+        '200':
+          description: List of all recipes correctly returned
+          schema:
+            $ref: '#/definitions/RecipeList'
+        '403':
+          description: Request failed
+  /recipes/user/{id}:
+    get:
+      summary: List of single user's recipes
+      operationId: UsersRecipeListQuery
+      tags:
+        - Recipes
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: List of user's recipes correctly returned
+          schema:
+            $ref: '#/definitions/RecipeList'
+        '400':
+          description: Bad user id given
+  /recipes/details/{id}:
+    get:
+      summary: Details of a single recipe
+      operationId: RecipeDetailesQuery
+      tags:
+        - Recipes
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: Request succeed
+          schema:
+            $ref: '#/definitions/RecipeListItemView'
+  /recipes/new:
+    post:
+      summary: Intention of creating a new recipe - adds new recipe to the database
+      operationId: NewRecipeHandler
+      tags:
+        - Recipes
+      parameters:
+        - name: recipe
+          in: body
+          schema:
+            $ref: '#/definitions/NewRecipe'
+          required: true
+      responses:
+        '200':
+          description: Recepie succesfuly created
+  /dictionary/units:
+    get:
+      summary: Returns dictionary of available ingredient units
+      operationId: UnitDictionaryQuery
+      tags:
+        - Dictionary
+      responses:
+        '200':
+          description: Units dictionary succesfuly returned
+          schema:
+            $ref: '#/definitions/DictionaryListView'
+
+definitions:
+  Login:
+    title: Login
+    description: Login parameters
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  RecipeList:
+    title: List of recipes
+    description: List of recipes
+    required:
+      - data
+      - totalCount
+    properties:
+      totalCount:
+        title: Total count of recipes
+        type: integer
+      data:
+        title: List of recipes
+        type: array
+        items:
+          $ref: '#/definitions/RecipeListItemView'
+  RecipeListItemView:
+    title: Single recipe view model
+    description: Single recipe view model presented on the list
+    required:
+      - title
+      - ingredients
+      - prescription
+    properties:
+      title:
+        title: Title of the recipe
+        type: string
+      description:
+        title: Description of the recipe
+        type: string
+      ingredients:
+        title: List of ingredients
+        type: array
+        items:
+          $ref: '#/definitions/IngredientListView'
+      prescription:
+        title: Prescription
+        type: string
+      preparationTime:
+        title: Time of preparation in minutes
+        type: integer
+      preparationTimeText:
+        title: Additional text to preparation time
+        description: Text explaining what is included in preparation time
+        type: string
+      author:
+        title: Author's name
+        type: string
+      photos:
+        title: List of photos
+        type: array
+        items:
+          $ref: '#/definitions/PhotoListView'
+  PhotoListView:
+    title: List of photos
+    description: List of photos
+    required:
+      - data
+      - totalCount
+    properties:
+      totalCount:
+        title: Total count of photos
+        type: integer
+      data:
+        title: List of photos
+        type: array
+        items:
+          $ref: '#/definitions/PhotoListItemView'
+  PhotoListItemView:
+    title: Single photo view model
+    description: Single photo connected with recipe
+    required:
+      - id
+      - name
+      - url
+    properties:
+      id:
+        title: Photo's id
+        type: integer
+      name:
+        title: Photo's name
+        type: string
+      url:
+        title: Photo's displaying url
+        type: string
+      isMain:
+        title: Information if this is a main recipe's photo
+        type: boolean
+  IngredientListView:
+    title: List of ingredients
+    description: List of ingredients
+    required:
+      - data
+      - totalCount
+    properties:
+      totalCount:
+        title: Total count of ingredients
+        type: integer
+      data:
+        title: List of ingredients
+        type: array
+        items:
+          $ref: '#/definitions/IngredientListItemView'
+  IngredientListItemView:
+    title: Single ingredient view model
+    description: Single ingredient view model presented on the list
+    required:
+      - name
+      - systemName
+      - amount
+      - unitName
+    properties:
+      name:
+        title: Name of the ingredient
+        type: string
+      systemName:
+        title: System name of the ingredient
+        type: string
+      amount:
+        title: Amount of the ingredient
+        type: number
+      unitName:
+        title: Unit of the ingredient amount
+        type: string
+  NewRecipe:
+    title: Recipe model view
+    required:
+      - title
+      - prescription
+    properties:
+      title:
+        title: Title of the recipe
+        type: string
+      ingredientsIds:
+        title: Ingredients from database
+        type: array
+        items:
+          type: integer
+      description:
+        title: Description
+        type: string
+      prescription:
+        title: Instructions how to make a meal
+        type: string
+      preparationTime:
+        title: Time of preparation
+        type: integer
+      preparationTimeText:
+        title: Additional text explaining time of preparation
+        type: string
+      photoId:
+        title: Photo of the meal
+        type: integer
+  DictionaryListView:
+    title: List of dictionary data
+    description: List of dictionary data
+    required:
+      - data
+      - totalCount
+    properties:
+      totalCount:
+        title: Total count of dictionary items
+        type: integer
+      data:
+        title: List of items
+        type: array
+        items:
+          $ref: '#/definitions/DictionaryListItemView'
+  DictionaryListItemView:
+    title: Dictionary item model view
+    required:
+      - id
+      - text
+    properties:
+      id:
+        title: Item id
+        type: integer
+      text:
+        title: Text representation of the item (ex for select purpose)
+        type: string

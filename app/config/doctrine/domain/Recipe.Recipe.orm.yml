@@ -1,0 +1,38 @@
+Cookway\Domain\Recipe\Recipe:
+    type: entity
+    table: recipe
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            nullable: false
+        description:
+            type: text
+            nullable: true
+        preparationTime:
+            type: integer
+            nullable: true
+        preparationTimeText:
+            type: string
+            nullable: true
+        createdAt:
+            type: datetime
+            nullable: false
+        modifiedAt:
+            type: datetime
+            nullable: true
+    manyToOne:
+        author:
+            targetEntity: Cookway\Domain\Core\User
+            inversedBy: recipes
+    oneToMany:
+        photos:
+            targetEntity: Cookway\Domain\Recipe\Photo
+            mappedBy: recipe
+        ingredients:
+            targetEntity: Ingredient
+            mappedBy: recipe
