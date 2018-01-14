@@ -178,8 +178,14 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/PhotoItemView'
-        schema:
   PhotoItemView:
+    title: Single photo view model
+    description: Single photo view model connected with recipe
+    required:
+      - id
+      - name
+      - url
+    properties:
       id:
         title: Photo's id
         type: integer
@@ -189,6 +195,9 @@ definitions:
       url:
         title: Photo's displaying url
         type: string
+      isMain:
+        title: Information is it main photo of the recipe
+        type: boolean
   IngredientList:
     title: List of ingredients
     description: List of ingredients
