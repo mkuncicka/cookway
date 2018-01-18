@@ -102,7 +102,7 @@ paths:
       tags:
         - Recipes
       parameters:
-        - name: recipe
+        - name: content
           in: body
           schema:
             $ref: '#/definitions/NewRecipe'
@@ -117,10 +117,10 @@ paths:
       tags:
         - Recipes
       parameters:
-        - name: ingredient
+        - name: content
           in: body
           schema:
-            $ref:
+            $ref: '#/definitions/NewIngredient'
           required: true
       responses:
         '200':
@@ -301,6 +301,8 @@ definitions:
       photoId:
         title: Photo of the meal
         type: integer
+  NewIngredient:
+    title: Intention of adding new ingredient
   DictionaryListView:
     title: List of dictionary data
     description: List of dictionary data

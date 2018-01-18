@@ -31,6 +31,11 @@ class DoctrineIngredientsRepository
         $this->repository = $entityManager->getRepository(Ingredient::class);
     }
 
+    public function add(Ingredient $ingredient)
+    {
+        $this->entityManager->persist($ingredient);
+    }
+
     public function getById($id)
     {
         return $this->repository->find($id);

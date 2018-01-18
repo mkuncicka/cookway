@@ -8,42 +8,54 @@
 
 namespace Cookway\Application\Recipe;
 
-
 use Cookway\Domain\Core\User;
+use JMS\Serializer\Annotation as Serializer;
 
-class NewRecipeCommand
+/**
+ * Intention of adding new recipe
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
+class NewRecipe
 {
     /**
+     * @Serializer\Type("string")
      * @var string
      */
     public $title;
 
     /**
+     * @Serializer\Type("array")
      * @var array
      */
     public $ingredientsIds;
 
     /**
+     * @Serializer\Type("string")
      * @var string
      */
     public $description;
 
     /**
+     * @Serializer\Type("string")
      * @var string
      */
     public $prescription;
 
     /**
+     * @Serializer\Type("integer")
      * @var int
      */
     public $preparationTime;
 
     /**
+     * @Serializer\Type("string")
      * @var string
      */
     public $preparationTimeText;
 
     /**
+     * @Serializer\Type("integer")
      * @var int
      */
     public $photoId;

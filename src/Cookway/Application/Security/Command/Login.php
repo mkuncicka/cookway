@@ -6,10 +6,10 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Infrastructure\Recipe\Query;
+namespace Cookway\Application\Security\Command;
 
 
-class RecipeDetailesQuery
+class Login
 {
 
 }

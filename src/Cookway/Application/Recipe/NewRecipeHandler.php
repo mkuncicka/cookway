@@ -8,14 +8,17 @@
 
 namespace Cookway\Application\Recipe;
 
-
 use Cookway\Domain\Recipe\Recipe;
 
+/**
+ * Class implementing adding new recipe
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class NewRecipeHandler
 {
-    public function handle(NewRecipeCommand $command)
+    public function handle(NewRecipe $command)
     {
         $recipe = new Recipe($command->title, $command->prescription, $command->user);
-
     }
 }

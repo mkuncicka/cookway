@@ -9,7 +9,7 @@
 namespace Cookway\Application\Security\Command;
 
 
-class LogoutCommand
+class Logout
 {
 
 }
