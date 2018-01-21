@@ -1,0 +1,12 @@
+Cookway\Domain\Core\Role:
+    type: entity
+    table: role
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        role:
+            type: string
+            nullable: false

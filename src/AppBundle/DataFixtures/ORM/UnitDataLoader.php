@@ -6,7 +6,7 @@
  * All Rights Reserved
  */
 
-namespace AppBundle\DataFixtures;
+namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;

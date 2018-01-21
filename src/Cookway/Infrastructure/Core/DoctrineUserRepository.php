@@ -30,4 +30,15 @@ class DoctrineUserRepository
         $this->repository = $entityManager->getRepository(User::class);
     }
 
+    public function getBuUsername(string $username)
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb->select('u')
+            ->from(User::class, 'u')
+            ->where('u.username = :username')
+            ->setParameter('username', $username);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
 }

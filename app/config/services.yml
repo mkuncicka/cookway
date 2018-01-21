@@ -1,4 +1,7 @@
 services:
+    AppBundle\DataFixtures\:
+        resource: '../../src/AppBundle/DataFixtures'
+        tags: ['doctrine.fixture.orm']
     app.recipe.ingredients_repository:
         class: Cookway\Infrastructure\Recipe\DoctrineIngredientsRepository
         arguments:
@@ -14,3 +17,11 @@ services:
     app.recipe.new_recipe_handler:
         class: Cookway\Application\Recipe\NewRecipeHandler
         arguments: {}
+    app.core.users_repository:
+        class: Cookway\Infrastructure\Core\DoctrineUserRepository
+        arguments:
+            - '@doctrine.orm.entity_manager'
+    app.core.security.user_provider:
+        class: Cookway\Application\Security\UserProvider
+        arguments:
+            - '@app.core.users_repository'
