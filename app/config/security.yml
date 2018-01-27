@@ -7,8 +7,8 @@ security:
             cost: 12
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        user:
+            id: 'app.core.security.user_provider'
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -16,12 +16,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        login:
+            pattern: ^/api/security/login
             anonymous: ~
-            # activate different ways to authenticate
-
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+        api_doc:
+            pattern: ^/api/doc$
+            anonymous: true
+        api:
+            pattern: ^/api
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+            stateless: true

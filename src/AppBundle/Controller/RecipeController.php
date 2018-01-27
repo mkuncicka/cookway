@@ -28,8 +28,8 @@ class RecipeController extends Controller
      * @Method("POST")
      * @Route("/recipes/new")
      *
-     * @var Request
      *
+     * @param Request $request
      * @return Response
      */
     public function newRecipe(Request $request)
