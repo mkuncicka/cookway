@@ -9,14 +9,15 @@ services:
     app.recipe.recipes_repository:
         class: Cookway\Infrastructure\Recipe\DoctrineRecipesRepository
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine.orm.default_entity_manager'
     app.recipe.photos_repository:
         class: Cookway\Infrastructure\Recipe\DoctrinePhotosRepository
         arguments:
             - '@doctrine.orm.entity_manager'
     app.recipe.new_recipe_handler:
         class: Cookway\Application\Recipe\NewRecipeHandler
-        arguments: {}
+        arguments:
+            - '@app.recipe.recipes_repository'
     app.core.users_repository:
         class: Cookway\Infrastructure\Core\DoctrineUserRepository
         arguments:

@@ -9,6 +9,7 @@
 namespace Cookway\Application\Recipe;
 
 use Cookway\Domain\Recipe\Recipe;
+use Cookway\Infrastructure\Recipe\DoctrineRecipesRepository;
 
 /**
  * Class implementing adding new recipe
@@ -17,8 +18,19 @@ use Cookway\Domain\Recipe\Recipe;
  */
 class NewRecipeHandler
 {
+    /**
+     * @var DoctrineRecipesRepository
+     */
+    private $recipesRepository;
+
+    public function __construct(DoctrineRecipesRepository $recipesRepository)
+    {
+        $this->recipesRepository = $recipesRepository;
+    }
+
     public function handle(NewRecipe $command)
     {
         $recipe = new Recipe($command->title, $command->prescription, $command->user);
+        $this->recipesRepository->add($recipe);
     }
 }

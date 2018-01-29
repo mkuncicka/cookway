@@ -9,7 +9,9 @@
 namespace Cookway\Application\Security\Command;
 
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class LoginHandler
@@ -20,27 +22,31 @@ class LoginHandler
      */
     private $userProvider;
     /**
-     * @var PasswordEncoderInterface
+     * @var UserPasswordEncoder
      */
     private $encoder;
 
-    public function __construct(UserProviderInterface $userProvider, PasswordEncoderInterface $encoder)
+    public function __construct(UserProviderInterface $userProvider, UserPasswordEncoder $encoder)
     {
         $this->userProvider = $userProvider;
         $this->encoder = $encoder;
     }
 
+    /**
+     * @param Login $command
+     */
     public function handle(Login $command)
     {
+
         $user = $this->userProvider->loadUserByUsername($command->username);
 
         if (!$user) {
-            throw new AccessDeniedException('Invalid user data provided');
+            throw new UnauthorizedHttpException('Invalid user data provided');
         }
 
-        $encodedPassword = $this->encoder->encodePassword($user, $command->password);
-        if ($user->getPassword() != $encodedPassword) {
-            throw new AccessDeniedException('Invalid user data provided');
+        $isValid = $this->encoder->isPasswordValid($user, $command->password);
+        if (!$isValid) {
+            throw new UnauthorizedHttpException('Invalid user data provided');
         }
     }
 }

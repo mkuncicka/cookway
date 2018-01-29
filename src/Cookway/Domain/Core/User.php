@@ -86,13 +86,14 @@ class User implements UserInterface
      * and populated in any number of different ways when the user object
      * is created.
      *
-     * @return (Role|string)[] The user roles
+     * @return array The user roles
      */
     public function getRoles()
     {
-        $roles = array_map(function($role) {
-            return $role->getRole();
-        }, $this->roles);
+        $roles = [];
+        foreach ($this->roles as $role) {
+            $roles[] = $role->getRole();
+        }
 
         return $roles;
     }
