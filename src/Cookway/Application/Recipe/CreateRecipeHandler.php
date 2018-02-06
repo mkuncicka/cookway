@@ -8,7 +8,9 @@
 
 namespace Cookway\Application\Recipe;
 
+use Cookway\Domain\Recipe\Ingredient;
 use Cookway\Domain\Recipe\Recipe;
+use Cookway\Infrastructure\Dictionary\UnitDictionaryQuery;
 use Cookway\Infrastructure\Recipe\DoctrineRecipesRepository;
 
 /**
@@ -16,21 +18,28 @@ use Cookway\Infrastructure\Recipe\DoctrineRecipesRepository;
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class NewRecipeHandler
+class CreateRecipeHandler
 {
     /**
      * @var DoctrineRecipesRepository
      */
     private $recipesRepository;
 
-    public function __construct(DoctrineRecipesRepository $recipesRepository)
+    public function __construct(DoctrineRecipesRepository $recipesRepository, UnitDictionaryQuery $units)
     {
         $this->recipesRepository = $recipesRepository;
     }
 
-    public function handle(NewRecipe $command)
+    public function handle(CreateRecipe $command)
     {
         $recipe = new Recipe($command->title, $command->prescription, $command->user);
+        /** @var CreateIngredient $ingredient */
+        foreach ($command->ingredients as $ingredient) {
+            $unit = $this->
+            $recipe->addIngredient(
+                new Ingredient($ingredient->name, $ingredient->amount, $ingredien)
+            );
+        }
         $this->recipesRepository->add($recipe);
     }
 }

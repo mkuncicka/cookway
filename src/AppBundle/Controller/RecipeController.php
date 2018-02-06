@@ -8,7 +8,7 @@
 
 namespace AppBundle\Controller;
 
-use Cookway\Application\Recipe\NewRecipe;
+use Cookway\Application\Recipe\CreateRecipe;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,18 +24,18 @@ class RecipeController extends Controller
 {
     /**
      * @Method("POST")
-     * @Route("/recipes/new")
+     * @Route("/recipes")
      *
      * @param Request $request
      * @return Response
      */
-    public function newRecipe(Request $request)
+    public function createRecipe(Request $request)
     {
         $em = $this->get('doctrine.orm.default_entity_manager');
         $em->beginTransaction();
         $content = $request->getContent();
         $serializer = $this->get('jms_serializer');
-        $command = $serializer->deserialize($content, NewRecipe::class, 'json');
+        $command = $serializer->deserialize($content, CreateRecipe::class, 'json');
         $command->user = $this->getUser();
         $handler = $this->get('app.recipe.new_recipe_handler');
         try {

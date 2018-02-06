@@ -61,6 +61,20 @@ paths:
             $ref: '#/definitions/RecipeList'
         '403':
           description: Request failed
+    post:
+      summary: Intention of creating a new recipe - adds new recipe to the database
+      operationId: NewRecipeHandler
+      tags:
+        - Recipes
+      parameters:
+        - name: content
+          in: body
+          schema:
+            $ref: '#/definitions/CreateRecipe'
+          required: true
+      responses:
+        '200':
+          description: Recipe succesfuly created
   /recipes/user/{id}:
     get:
       summary: List of single user's recipes
@@ -79,7 +93,7 @@ paths:
             $ref: '#/definitions/RecipeList'
         '400':
           description: Bad user id given
-  /recipes/details/{id}:
+  /recipes/{id}:
     get:
       summary: Details of a single recipe
       operationId: RecipeDetailesQuery
@@ -95,22 +109,7 @@ paths:
           description: Request succeed
           schema:
             $ref: '#/definitions/RecipeListItemView'
-  /recipes/new:
-    post:
-      summary: Intention of creating a new recipe - adds new recipe to the database
-      operationId: NewRecipeHandler
-      tags:
-        - Recipes
-      parameters:
-        - name: content
-          in: body
-          schema:
-            $ref: '#/definitions/NewRecipe'
-          required: true
-      responses:
-        '200':
-          description: Recipe succesfuly created
-  /recipes/ingredients/new:
+  /recipes/ingredients:
     post:
       summary: Intention of creating a new ingredient
       operationId: NewIngredientHandler
@@ -120,7 +119,7 @@ paths:
         - name: content
           in: body
           schema:
-            $ref: '#/definitions/NewIngredient'
+            $ref: '#/definitions/CreateIngredient'
           required: true
       responses:
         '200':
@@ -136,7 +135,6 @@ paths:
           description: Units dictionary succesfuly returned
           schema:
             $ref: '#/definitions/DictionaryListView'
-
 definitions:
   Login:
     title: Login
@@ -272,7 +270,7 @@ definitions:
       unitName:
         title: Unit of the ingredient amount
         type: string
-  NewRecipe:
+  CreateRecipe:
     title: Recipe model view
     required:
       - title
@@ -281,11 +279,12 @@ definitions:
       title:
         title: Title of the recipe
         type: string
-      ingredientsIds:
+      ingredients:
         title: Ingredients from database
         type: array
         items:
-          type: integer
+          schema:
+            $ref: '#/definitions/CreateIngredient'
       description:
         title: Description
         type: string
@@ -301,8 +300,16 @@ definitions:
       photoId:
         title: Photo of the meal
         type: integer
-  NewIngredient:
-    title: Intention of adding new ingredient
+  CreateIngredient:
+    name:
+      title: Nama of the ingredient
+      type: string
+    amount:
+      title: Amount of the ingredient
+      type: float
+    unit:
+      title: Unit of the amount
+      type: number
   DictionaryListView:
     title: List of dictionary data
     description: List of dictionary data

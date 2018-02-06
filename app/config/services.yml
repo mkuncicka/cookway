@@ -6,6 +6,10 @@ services:
         class: Cookway\Infrastructure\Recipe\DoctrineIngredientsRepository
         arguments:
             - '@doctrine.orm.entity_manager'
+    app.recipe.unit_repository:
+        class: Cookway\Infrastructure\Recipe\DoctrineUnitsRepository
+        arguments:
+            - '@doctrine.orm.entity_manager'
     app.recipe.recipes_repository:
         class: Cookway\Infrastructure\Recipe\DoctrineRecipesRepository
         arguments:
@@ -14,10 +18,11 @@ services:
         class: Cookway\Infrastructure\Recipe\DoctrinePhotosRepository
         arguments:
             - '@doctrine.orm.entity_manager'
-    app.recipe.new_recipe_handler:
-        class: Cookway\Application\Recipe\NewRecipeHandler
+    app.recipe.create_recipe_handler:
+        class: Cookway\Application\Recipe\CreateRecipeHandler
         arguments:
             - '@app.recipe.recipes_repository'
+            - ''
     app.core.users_repository:
         class: Cookway\Infrastructure\Core\DoctrineUserRepository
         arguments:
@@ -31,3 +36,7 @@ services:
         arguments:
             - '@app.core.security.user_provider'
             - '@security.password_encoder'
+    app.dictionary.units_ditionary_query:
+        class: Cookway\Infrastructure\Dictionary\UnitDictionaryQuery
+        arguments:
+            - '@app.recipe.unit_repository'

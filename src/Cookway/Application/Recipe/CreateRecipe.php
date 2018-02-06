@@ -16,7 +16,7 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class NewRecipe
+class CreateRecipe
 {
     /**
      * @Serializer\Type("string")
@@ -26,9 +26,9 @@ class NewRecipe
 
     /**
      * @Serializer\Type("array")
-     * @var array
+     * @var CreateIngredient
      */
-    public $ingredientsIds;
+    public $ingredients;
 
     /**
      * @Serializer\Type("string")
@@ -65,12 +65,12 @@ class NewRecipe
      */
     public $user;
 
-    public function __construct(string $title, string $prescription, array $ingredientsIds = [], string $description = null,
+    public function __construct(string $title, string $prescription, array $ingredients = [], string $description = null,
                                 int $preparationTime = null, string $preparationTimeText = null, int $photoId = null
     )
     {
         $this->title = $title;
-        $this->ingredientsIds = $ingredientsIds;
+        $this->ingredients = $ingredients;
         $this->description = $description;
         $this->prescription = $prescription;
         $this->preparationTime = $preparationTime;
