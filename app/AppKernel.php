@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
-
+            new League\Tactician\Bundle\TacticianBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

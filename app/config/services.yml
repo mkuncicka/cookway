@@ -2,6 +2,10 @@ services:
     AppBundle\DataFixtures\:
         resource: '../../src/AppBundle/DataFixtures'
         tags: ['doctrine.fixture.orm']
+    app.base_controller:
+        class: AppBundle\Controller\BaseController
+        arguments:
+            - '@tactician.commandbus'
     app.recipe.ingredients_repository:
         class: Cookway\Infrastructure\Recipe\DoctrineIngredientsRepository
         arguments:
