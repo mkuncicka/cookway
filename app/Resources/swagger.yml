@@ -50,7 +50,7 @@ paths:
   # RECIPES
   /recipes:
     get:
-      summary: List of recipes
+      summary: List of all recipes
       operationId: RecipeListQuery
       tags:
         - Recipes
@@ -58,13 +58,27 @@ paths:
         '200':
           description: List of all recipes correctly returned
           schema:
-            $ref: '#/definitions/RecipeList'
+            $ref: '#/definitions/RecipeListView'
         '403':
           description: Request failed
+    post:
+      summary: Intention of creating a new recipe - adds new recipe to the database
+      operationId: CreateRecipeHandler
+      tags:
+        - Recipes
+      parameters:
+        - name: content
+          in: body
+          schema:
+            $ref: '#/definitions/CreateRecipe'
+          required: true
+      responses:
+        '200':
+          description: Recipe succesfuly created
   /recipes/user/{id}:
     get:
       summary: List of single user's recipes
-      operationId: UsersRecipeListQuery
+      operationId: UserRecipesListQuery
       tags:
         - Recipes
       parameters:
@@ -76,10 +90,10 @@ paths:
         '200':
           description: List of user's recipes correctly returned
           schema:
-            $ref: '#/definitions/RecipeList'
+            $ref: '#/definitions/RecipeListView'
         '400':
           description: Bad user id given
-  /recipes/details/{id}:
+  /recipes/{id}:
     get:
       summary: Details of a single recipe
       operationId: RecipeDetailesQuery
@@ -95,21 +109,25 @@ paths:
           description: Request succeed
           schema:
             $ref: '#/definitions/RecipeListItemView'
-  /recipes/new:
+  /recipes/{id}/ingredients:
     post:
-      summary: Intention of creating a new recipe - adds new recipe to the database
-      operationId: NewRecipeHandler
+      summary: Intention of adding new ingredient to recipe
+      operationId: CreateIngredientHandler
       tags:
         - Recipes
       parameters:
-        - name: recipe
+        - name: id
+          in: path
+          type: integer
+          required: true
+        - name: content
           in: body
           schema:
-            $ref: '#/definitions/NewRecipe'
+            $ref: '#/definitions/CreateIngredient'
           required: true
       responses:
         '200':
-          description: Recepie succesfuly created
+          description: Ingredient succesfully added
   /dictionary/units:
     get:
       summary: Returns dictionary of available ingredient units
@@ -121,7 +139,6 @@ paths:
           description: Units dictionary succesfuly returned
           schema:
             $ref: '#/definitions/DictionaryListView'
-
 definitions:
   Login:
     title: Login
@@ -134,12 +151,9 @@ definitions:
         type: string
       password:
         type: string
-  RecipeList:
+  RecipeListView:
     title: List of recipes
     description: List of recipes
-    required:
-      - data
-      - totalCount
     properties:
       totalCount:
         title: Total count of recipes
@@ -152,11 +166,10 @@ definitions:
   RecipeListItemView:
     title: Single recipe view model
     description: Single recipe view model presented on the list
-    required:
-      - title
-      - ingredients
-      - prescription
     properties:
+      id:
+        title: Id of the recipe
+        type: integer
       title:
         title: Title of the recipe
         type: string
@@ -189,9 +202,6 @@ definitions:
   PhotoListView:
     title: List of photos
     description: List of photos
-    required:
-      - data
-      - totalCount
     properties:
       totalCount:
         title: Total count of photos
@@ -204,10 +214,6 @@ definitions:
   PhotoListItemView:
     title: Single photo view model
     description: Single photo connected with recipe
-    required:
-      - id
-      - name
-      - url
     properties:
       id:
         title: Photo's id
@@ -224,9 +230,6 @@ definitions:
   IngredientListView:
     title: List of ingredients
     description: List of ingredients
-    required:
-      - data
-      - totalCount
     properties:
       totalCount:
         title: Total count of ingredients
@@ -239,17 +242,12 @@ definitions:
   IngredientListItemView:
     title: Single ingredient view model
     description: Single ingredient view model presented on the list
-    required:
-      - name
-      - systemName
-      - amount
-      - unitName
     properties:
+      id:
+        title: Id of ingredient
+        type: integer
       name:
         title: Name of the ingredient
-        type: string
-      systemName:
-        title: System name of the ingredient
         type: string
       amount:
         title: Amount of the ingredient
@@ -257,20 +255,21 @@ definitions:
       unitName:
         title: Unit of the ingredient amount
         type: string
-  NewRecipe:
+  CreateRecipe:
     title: Recipe model view
     required:
       - title
       - prescription
+      - ingredients
     properties:
       title:
         title: Title of the recipe
         type: string
-      ingredientsIds:
+      ingredients:
         title: Ingredients from database
         type: array
         items:
-          type: integer
+          $ref: '#/definitions/CreateIngredient'
       description:
         title: Description
         type: string
@@ -284,8 +283,24 @@ definitions:
         title: Additional text explaining time of preparation
         type: string
       photoId:
-        title: Photo of the meal
+        title: Main photo identification number
         type: integer
+  CreateIngredient:
+    title: Intention of creating an ingredient
+    required:
+      - name
+      - amount
+      - unitId
+    properties:
+      name:
+        title: Name of the ingredient
+        type: string
+      amount:
+        title: Amount of the ingredient
+        type: number
+      unitId:
+        title: Unit of the amount
+        type: number
   DictionaryListView:
     title: List of dictionary data
     description: List of dictionary data
@@ -303,9 +318,6 @@ definitions:
           $ref: '#/definitions/DictionaryListItemView'
   DictionaryListItemView:
     title: Dictionary item model view
-    required:
-      - id
-      - text
     properties:
       id:
         title: Item id

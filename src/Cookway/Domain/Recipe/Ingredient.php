@@ -35,11 +35,22 @@ class Ingredient
      */
     private $recipe;
 
-    public function __construct(string $name, float $amount, Unit $unit, Recipe $recipe)
+    public function __construct(string $name, float $amount, Unit $unit)
     {
         $this->name = $name;
         $this->amount = $amount;
         $this->unit = $unit;
+    }
+
+    /**
+     * Assigns Recipe to ingredient
+     * @param Recipe $recipe
+     * @return $this
+     */
+    public function assignRecipe(Recipe $recipe)
+    {
         $this->recipe = $recipe;
+
+        return $this;
     }
 }

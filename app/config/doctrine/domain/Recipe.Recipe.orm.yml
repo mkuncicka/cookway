@@ -36,3 +36,4 @@ Cookway\Domain\Recipe\Recipe:
         ingredients:
             targetEntity: Ingredient
             mappedBy: recipe
+            cascade: ['persist', 'remove']

@@ -7,6 +7,19 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    jms_serializer.serialized_name_annotation_strategy.class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
+
+lexik_jwt_authentication:
+    private_key_path: '%kernel.root_dir%/Resources/jwt/private.pem'
+    public_key_path: '%kernel.root_dir%/Resources/jwt/public.pem'
+    pass_phrase: '%jwt_key_pass_phrase%'
+    token_ttl: 3600
+    token_extractors:
+        authorization_header:      # look for a token as Authorization Header
+            enabled: false
+        cookie:                    # check token in a cookie
+            enabled: true
+            name:    BEARER
 
 framework:
     #esi: ~
