@@ -10,10 +10,11 @@ namespace Cookway\Infrastructure\Recipe;
 
 
 use Cookway\Domain\Recipe\Ingredient;
+use Cookway\Domain\Recipe\Ingredients;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class DoctrineIngredientsRepository
+class DoctrineIngredientsRepository implements Ingredients
 {
     /**
      * @var EntityManagerInterface

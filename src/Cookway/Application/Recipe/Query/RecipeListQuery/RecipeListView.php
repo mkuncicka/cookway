@@ -6,13 +6,13 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Application\Recipe;
+namespace Cookway\Application\Recipe\Query\RecipeListQuery;
 
 /**
- * View model of dictionary list
+ * Recipe list view model
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class DictionaryListView
+class RecipeListView
 {
     /**
      * @var integer
@@ -20,7 +20,7 @@ class DictionaryListView
     public $totalCount;
 
     /**
-     * @var DictionaryListItemView[]
+     * @var RecipeListItemView[]
      */
     public $data;
 
@@ -29,4 +29,5 @@ class DictionaryListView
         $this->totalCount = $totalCount;
         $this->data = $data;
     }
+
 }
