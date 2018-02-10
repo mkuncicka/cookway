@@ -13,6 +13,9 @@ Cookway\Domain\Recipe\Recipe:
         description:
             type: text
             nullable: true
+        prescription:
+            type: text
+            nullable: false
         preparationTime:
             type: integer
             nullable: true

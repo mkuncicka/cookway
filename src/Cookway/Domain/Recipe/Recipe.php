@@ -9,6 +9,7 @@
 namespace Cookway\Domain\Recipe;
 
 use Cookway\Domain\Core\User;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Recipe model
@@ -33,7 +34,7 @@ class Recipe
      */
     private $prescription;
     /**
-     * @var Ingredient[]
+     * @var ArrayCollection
      */
     private $ingredients;
     /**
@@ -45,7 +46,7 @@ class Recipe
      */
     private $preparationTimeText;
     /**
-     * @var Photo[]
+     * @var ArrayCollection
      */
     private $photos;
     /**
@@ -67,6 +68,8 @@ class Recipe
         $this->prescription = $prescription;
         $this->createdAt = new \DateTime();
         $this->author = $author;
+        $this->ingredients = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     /**
@@ -155,5 +158,69 @@ class Recipe
         $this->preparationTimeText = $preparationTimeText;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrescription(): string
+    {
+        return $this->prescription;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getIngredients()
+    {
+        return $this->ingredients;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPreparationTime()
+    {
+        return $this->preparationTime;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPreparationTimeText()
+    {
+        return $this->preparationTimeText;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

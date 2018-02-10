@@ -6,18 +6,15 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Application\Dictionary\Query;
+namespace Cookway\Application\Recipe\Query\RecipeListQuery;
 
 use Cookway\Infrastructure\QueryParametersInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class UnitDictionaryQueryParameters implements QueryParametersInterface
+class RecipeListQueryParameters implements QueryParametersInterface
 {
-
     /**
-     * Creates QueryParameters class from Request
-     * @param Request $request
-     * @return $this
+     * @inheritdoc
      */
     public static function fromRequest(Request $request)
     {
