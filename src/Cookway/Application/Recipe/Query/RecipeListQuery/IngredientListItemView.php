@@ -9,7 +9,7 @@
 namespace Cookway\Application\Recipe\Query\RecipeListQuery;
 
 
-class IngredientItemView
+class IngredientListItemView
 {
     /**
      * @var int

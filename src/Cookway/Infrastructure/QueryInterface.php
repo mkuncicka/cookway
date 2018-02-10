@@ -15,11 +15,4 @@ namespace Cookway\Infrastructure;
  */
 interface QueryInterface
 {
-    /**
-     * Returns queried data
-     *
-     * @param QueryParametersInterface $parameters
-     * @return mixed
-     */
-    public function query(QueryParametersInterface $parameters);
 }

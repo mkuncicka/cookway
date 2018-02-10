@@ -9,6 +9,7 @@
 namespace Cookway\Infrastructure\Recipe\Query;
 
 use Cookway\Application\Recipe\Query\RecipeListQuery\RecipeListItemView;
+use Cookway\Application\Recipe\Query\RecipeListQuery\RecipeListQueryParameters;
 use Cookway\Application\Recipe\Query\RecipeListQuery\RecipeListView;
 use Cookway\Domain\Recipe\Recipe;
 use Cookway\Infrastructure\QueryInterface;
@@ -36,10 +37,10 @@ class RecipeListQuery implements QueryInterface
     /**
      * Returns queried data
      *
-     * @param QueryParametersInterface $parameters
+     * @param RecipeListQueryParameters $parameters
      * @return mixed
      */
-    public function query(QueryParametersInterface $parameters)
+    public function query(RecipeListQueryParameters $parameters)
     {
         $recipes = $this->recipes->getAll();
         $data = [];

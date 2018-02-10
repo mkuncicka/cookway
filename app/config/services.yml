@@ -48,3 +48,7 @@ services:
         arguments:
             - '@app.recipe.recipes_repository'
             - '@doctrine.orm.entity_manager'
+    app.recipe.recipe_details_query:
+        class: Cookway\Infrastructure\Recipe\Query\RecipeDetailsQuery
+        arguments:
+            - '@app.recipe.recipes_repository'
