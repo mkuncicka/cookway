@@ -10,9 +10,10 @@ namespace Cookway\Infrastructure\Core;
 
 
 use Cookway\Domain\Core\User;
+use Cookway\Domain\Core\Users;
 use Doctrine\ORM\EntityManagerInterface;
 
-class DoctrineUserRepository
+class DoctrineUserRepository implements Users
 {
     /**
      * @var EntityManagerInterface
@@ -30,7 +31,10 @@ class DoctrineUserRepository
         $this->repository = $entityManager->getRepository(User::class);
     }
 
-    public function getBuUsername(string $username)
+    /**
+     * @inheritdoc
+     */
+    public function getByUsername(string $username)
     {
         $qb = $this->entityManager->createQueryBuilder();
         $qb->select('u')
@@ -41,4 +45,11 @@ class DoctrineUserRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getById(int $id)
+    {
+        return $this->repository->find($id);
+    }
 }

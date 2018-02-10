@@ -9,6 +9,8 @@
 namespace Cookway\Domain\Recipe;
 
 
+use Cookway\Domain\Core\User;
+
 interface Recipes
 {
     /**
@@ -31,5 +33,12 @@ interface Recipes
      * @return Recipe|null
      */
     public function getById(int $id);
+
+    /**
+     * Returns all recepies of one user
+     * @param User $user
+     * @return Recipe[]
+     */
+    public function getByUser(User $user);
 
 }
