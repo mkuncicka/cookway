@@ -16,9 +16,17 @@ namespace Cookway\Domain\Recipe;
 interface Units
 {
     /**
-     * Returns lost of available units
+     * Returns list of available units
      *
      * @return Unit[]
      */
     public function getAll();
+
+    /**
+     * Returns unit identified by id or null if doesn't exists
+     *
+     * @param int $id
+     * @return Unit
+     */
+    public function getById(int $id);
 }

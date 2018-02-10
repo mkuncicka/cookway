@@ -10,9 +10,7 @@ namespace AppBundle\Controller;
 
 use Cookway\Infrastructure\QueryInterface;
 use Cookway\Infrastructure\QueryParametersInterface;
-use JMS\Serializer\Serializer;
-use League\Tactician\CommandBus;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -21,52 +19,72 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class BaseController
+class BaseController extends Controller
 {
-    /**
-     * @var CommandBus
-     */
-    private $commandBus;
-    /**
-     * @var Serializer
-     */
-    private $serializer;
-
-    public function __construct(CommandBus $commandBus, Serializer $serializer)
-    {
-        $this->commandBus = $commandBus;
-        $this->serializer = $serializer;
-    }
-
     public function handleCommand($command)
     {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $commandBus = $this->get('tactician.commandbus');
+        $serializer = $this->get('jms_serializer');
+        $em->beginTransaction();
+
         try {
-            $response = $this->commandBus->handle($command);
-            $response = new JsonResponse('', Response::HTTP_NO_CONTENT);
+            $result = $commandBus->handle($command);
+            $serializedResult = $serializer->serialize($result, 'json');
+
+            $response = new Response($serializedResult, Response::HTTP_NO_CONTENT);
+            $response->headers->set('Content-Type', 'application/json');
+
+            $em->flush();
+            $em->commit();
         } catch (\InvalidArgumentException $e) {
-            $response = new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            $response = new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            $em->rollback();
         } catch (AccessDeniedException $e) {
-            $response = new JsonResponse($e->getMessage(), Response::HTTP_FORBIDDEN);
+            $response = new Response($e->getMessage(), Response::HTTP_FORBIDDEN);
+            $em->rollback();
         } catch (\Exception $e) {
-            $response = new JsonResponse($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            $response = new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            $em->rollback();
+        }
+
+        if ($em->isOpen()) {
+            $em->close();
         }
 
         return $response;
     }
 
-    public function query(QueryInterface $query, QueryParametersInterface $parameters) {
+    public function query(QueryInterface $query, QueryParametersInterface $parameters)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $serializer = $this->get('jms_serializer');
+        $em->beginTransaction();
 
         try {
             $result = $query->query($parameters);
-            $serializedResult = $this->serializer->serialize($result, 'json');
+            $serializedResult = $serializer->serialize($result, 'json');
 
-            $response = new JsonResponse($serializedResult, Response::HTTP_NO_CONTENT);
+            $response = new Response($serializedResult, Response::HTTP_OK);
+            $response->headers->set('Content-Type', 'application/json');
+
+
+            $em->flush();
+            $em->commit();
+
         } catch (\InvalidArgumentException $e) {
-            $response = new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            $response = new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            $em->rollback();
         } catch (AccessDeniedException $e) {
-            $response = new JsonResponse($e->getMessage(), Response::HTTP_FORBIDDEN);
+            $response = new Response($e->getMessage(), Response::HTTP_FORBIDDEN);
+            $em->rollback();
         } catch (\Exception $e) {
-            $response = new JsonResponse($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            $response = new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            $em->rollback();
+        }
+
+        if ($em->isOpen()) {
+            $em->close();
         }
 
         return $response;

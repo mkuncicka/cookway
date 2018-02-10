@@ -43,4 +43,11 @@ class DoctrineUnitsRepository implements Units
         return $this->repository->findAll();
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getById(int $id)
+    {
+        return $this->repository->find($id);
+    }
 }

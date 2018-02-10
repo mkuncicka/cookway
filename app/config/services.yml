@@ -2,10 +2,6 @@ services:
     AppBundle\DataFixtures\:
         resource: '../../src/AppBundle/DataFixtures'
         tags: ['doctrine.fixture.orm']
-    app.base_controller:
-        class: AppBundle\Controller\BaseController
-        arguments:
-            - '@tactician.commandbus'
     app.recipe.ingredients_repository:
         class: Cookway\Infrastructure\Recipe\DoctrineIngredientsRepository
         arguments:
@@ -26,7 +22,9 @@ services:
         class: Cookway\Application\Recipe\CreateRecipeHandler
         arguments:
             - '@app.recipe.recipes_repository'
-            - ''
+            - '@app.dictionary.units_dictionary_query'
+        tags:
+            - { name: tactician.handler, command: Cookway\Application\Recipe\CreateRecipe }
     app.core.users_repository:
         class: Cookway\Infrastructure\Core\DoctrineUserRepository
         arguments:
@@ -40,7 +38,7 @@ services:
         arguments:
             - '@app.core.security.user_provider'
             - '@security.password_encoder'
-    app.dictionary.units_ditionary_query:
+    app.dictionary.units_dictionary_query:
         class: Cookway\Infrastructure\Dictionary\UnitDictionaryQuery
         arguments:
             - '@app.recipe.unit_repository'

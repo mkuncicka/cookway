@@ -13,8 +13,10 @@ use Cookway\Application\Recipe\DictionaryListItemView;
 use Cookway\Application\Recipe\DictionaryListView;
 use Cookway\Domain\Recipe\Unit;
 use Cookway\Domain\Recipe\Units;
+use Cookway\Infrastructure\QueryInterface;
+use Cookway\Infrastructure\QueryParametersInterface;
 
-class UnitDictionaryQuery
+class UnitDictionaryQuery implements QueryInterface
 {
     /**
      * @var Units
@@ -26,7 +28,7 @@ class UnitDictionaryQuery
         $this->units = $units;
     }
 
-    public function query()
+    public function query(QueryParametersInterface $parameters)
     {
         $units = $this->units->getAll();
         $data = [];

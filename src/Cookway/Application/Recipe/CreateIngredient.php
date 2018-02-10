@@ -8,19 +8,24 @@
 
 namespace Cookway\Application\Recipe;
 
+use JMS\Serializer\Annotation as Serializer;
+
 class CreateIngredient
 {
     /**
+     * @Serializer\Type("string")
      * @var string
      */
     public $name;
 
     /**
+     * @Serializer\Type("float")
      * @var float
      */
     public $amount;
 
     /**
+     * @Serializer\Type("integer")
      * @var int
      */
     public $unitId;

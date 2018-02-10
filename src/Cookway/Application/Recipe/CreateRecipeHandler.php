@@ -10,7 +10,7 @@ namespace Cookway\Application\Recipe;
 
 use Cookway\Domain\Recipe\Ingredient;
 use Cookway\Domain\Recipe\Recipe;
-use Cookway\Infrastructure\Dictionary\UnitDictionaryQuery;
+use Cookway\Domain\Recipe\Units;
 use Cookway\Infrastructure\Recipe\DoctrineRecipesRepository;
 
 /**
@@ -24,22 +24,31 @@ class CreateRecipeHandler
      * @var DoctrineRecipesRepository
      */
     private $recipesRepository;
+    /**
+     * @var Units
+     */
+    private $units;
 
-    public function __construct(DoctrineRecipesRepository $recipesRepository, UnitDictionaryQuery $units)
+    public function __construct(DoctrineRecipesRepository $recipesRepository, Units $units)
     {
         $this->recipesRepository = $recipesRepository;
+        $this->units = $units;
     }
 
     public function handle(CreateRecipe $command)
     {
         $recipe = new Recipe($command->title, $command->prescription, $command->user);
+        $recipe->setDescription($command->description);
+        $recipe->setPreparationTime($command->preparationTime);
+        $recipe->setPreparationTimeText($command->preparationTimeText);
+
         /** @var CreateIngredient $ingredient */
         foreach ($command->ingredients as $ingredient) {
-            $unit = $this->
-            $recipe->addIngredient(
-                new Ingredient($ingredient->name, $ingredient->amount, $ingredien)
-            );
+            $unit = $this->units->getById($ingredient->unitId);
+            $ingredient = new Ingredient($ingredient->name, $ingredient->amount, $unit);
+            $recipe->addIngredient($ingredient);
         }
+
         $this->recipesRepository->add($recipe);
     }
 }
