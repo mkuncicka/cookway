@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use Cookway\Application\Recipe\CreateRecipe;
 use Cookway\Application\Recipe\Query\RecipeDetailsQuery\RecipeDetailsQueryParameters;
 use Cookway\Application\Recipe\Query\RecipeListQuery\RecipeListQueryParameters;
+use Cookway\Application\Recipe\Query\UsersRecipeListQuery\UsersRecipeListQueryParameters;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,6 +69,23 @@ class RecipeController extends BaseController
         $query = $this->get('app.recipe.recipe_details_query');
         $parameters = RecipeDetailsQueryParameters::fromRequest($request);
         $parameters->id = $id;
+
+        return $this->query($query, $parameters);
+    }
+
+    /**
+     * @Method("GET")
+     * @Route("/recipes/users/{id}")
+     *
+     * @param Request $request
+     * @param $id
+     * @return Response
+     */
+    public function getUsersRecipeList(Request $request, $id)
+    {
+        $query = $this->get('app.recipe.users_recipe_query');
+        $parameters = UsersRecipeListQueryParameters::fromRequest($request);
+        $parameters->userId = $id;
 
         return $this->query($query, $parameters);
     }
