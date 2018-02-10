@@ -16,12 +16,14 @@ Cookway\Domain\Recipe\Ingredient:
     manyToOne:
         recipe:
             targetEntity: Cookway\Domain\Recipe\Recipe
+            cascade: ['persist']
             inversedBy: ingredients
             joinColumn:
                 columnName: recipe_id
                 referencedColumnName: id
         unit:
             targetEntity: Cookway\Domain\Recipe\Unit
+            cascade: ['persist']
             joinColumn:
                 columnName: unit_id
                 referencedColumnName: id

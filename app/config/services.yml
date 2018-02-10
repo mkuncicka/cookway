@@ -22,7 +22,8 @@ services:
         class: Cookway\Application\Recipe\CreateRecipeHandler
         arguments:
             - '@app.recipe.recipes_repository'
-            - '@app.dictionary.units_dictionary_query'
+            - '@app.recipe.unit_repository'
+            - '@app.recipe.ingredients_repository'
         tags:
             - { name: tactician.handler, command: Cookway\Application\Recipe\CreateRecipe }
     app.core.users_repository:

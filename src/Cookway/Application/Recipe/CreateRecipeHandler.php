@@ -11,6 +11,7 @@ namespace Cookway\Application\Recipe;
 use Cookway\Domain\Recipe\Ingredient;
 use Cookway\Domain\Recipe\Recipe;
 use Cookway\Domain\Recipe\Units;
+use Cookway\Infrastructure\Recipe\DoctrineIngredientsRepository;
 use Cookway\Infrastructure\Recipe\DoctrineRecipesRepository;
 
 /**
@@ -28,25 +29,37 @@ class CreateRecipeHandler
      * @var Units
      */
     private $units;
+    /**
+     * @var DoctrineIngredientsRepository
+     */
+    private $ingredients;
 
-    public function __construct(DoctrineRecipesRepository $recipesRepository, Units $units)
+    public function __construct(DoctrineRecipesRepository $recipesRepository, Units $units, DoctrineIngredientsRepository $ingredients)
     {
         $this->recipesRepository = $recipesRepository;
         $this->units = $units;
+        $this->ingredients = $ingredients;
     }
 
     public function handle(CreateRecipe $command)
     {
         $recipe = new Recipe($command->title, $command->prescription, $command->user);
-        $recipe->setDescription($command->description);
-        $recipe->setPreparationTime($command->preparationTime);
-        $recipe->setPreparationTimeText($command->preparationTimeText);
+        if ($command->description !== null) {
+            $recipe->setDescription($command->description);
+        }
+        if ($command->preparationTime !== null) {
+            $recipe->setPreparationTime($command->preparationTime);
+        }
+        if ($command->preparationTimeText !== null) {
+            $recipe->setPreparationTimeText($command->preparationTimeText);
+        }
 
         /** @var CreateIngredient $ingredient */
         foreach ($command->ingredients as $ingredient) {
             $unit = $this->units->getById($ingredient->unitId);
             $ingredient = new Ingredient($ingredient->name, $ingredient->amount, $unit);
-            $recipe->addIngredient($ingredient);
+            $ingredient->assignRecipe($recipe);
+            $this->ingredients->add($ingredient);
         }
 
         $this->recipesRepository->add($recipe);

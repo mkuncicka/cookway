@@ -25,8 +25,8 @@ class CreateRecipe
     public $title;
 
     /**
-     * @Serializer\Type("Cookway\Application\Recipe\CreateIngredient")
-     * @var CreateIngredient
+     * @Serializer\Type("array<Cookway\Application\Recipe\CreateIngredient>")
+     * @var CreateIngredient[]
      */
     public $ingredients;
 
