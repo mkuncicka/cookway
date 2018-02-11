@@ -4,13 +4,13 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
     app.recipe.unit_repository:
-            class: Cookway\Infrastructure\Recipe\DoctrineUnitsRepository
-            arguments:
-                - '@doctrine.orm.entity_manager'
+        class: Cookway\Infrastructure\Recipe\DoctrineUnitsRepository
+        arguments:
+            - '@doctrine.orm.entity_manager'
     app.recipe.recipes_repository:
         class: Cookway\Infrastructure\Recipe\DoctrineRecipesRepository
         arguments:
-            - '@doctrine.orm.default_entity_manager'
+            - '@doctrine.orm.entity_manager'
     app.recipe.photos_repository:
         class: Cookway\Infrastructure\Recipe\DoctrinePhotosRepository
         arguments:

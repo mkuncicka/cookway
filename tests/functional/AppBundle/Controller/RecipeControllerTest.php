@@ -21,15 +21,13 @@ class RecipeControllerTest extends AbstractFunctionalTestCase
         $path = '/api/recipes';
         $params = [];
         $content = [
-            "title" => "Przepisior nowy",
+            "title" => "New Recipe",
             "ingredients" => [
-                [ "name" => "mąka", "amount" => 2, "unitId" => 1]
+                [ "name" => "new ingredient", "amount" => 2, "unitId" => 1]
             ], 
-            "description" => "inny przepis",
-            "prescription" => "Coś tam - zjedz",
-            "preparationTime" => 10,
-            "preparationTimeText" => null,
-            "photoId" => null
+            "description" => "new recipe",
+            "prescription" => "new prescription",
+            "preparationTime" => 30,
         ];
 
         self::authenticate('admin');
