@@ -17,3 +17,5 @@ swiftmailer:
 
 parameters:
     database_name: cookway_test
+    init_sql_file_path: '%kernel.root_dir%/Resources/test/init.sql'
+    purge_sql_file_path: '%kernel.root_dir%/Resources/test/purge.sql'

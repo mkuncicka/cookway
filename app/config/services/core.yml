@@ -2,7 +2,7 @@ services:
     app.core.users_repository:
         class: Cookway\Infrastructure\Core\DoctrineUserRepository
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine.orm.default_entity_manager'
     app.core.security.user_provider:
         public: true
         class: Cookway\Application\Security\UserProvider

@@ -29,6 +29,7 @@
         "jms/serializer": "^1.10",
         "jms/serializer-bundle": "^2.3",
         "league/tactician-bundle": "^1.1",
+        "league/tactician-doctrine": "^1.1",
         "lexik/jwt-authentication-bundle": "^2.4",
         "phpunit/phpunit": "^6.5",
         "sensio/distribution-bundle": "^5.0.19",

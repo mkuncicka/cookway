@@ -10,16 +10,15 @@ namespace Cookway\Tests;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides methods for functional tests
+ * Provides methods for integration tests
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-abstract class AbstractFunctionalTestCase extends WebTestCase
+abstract class AbstractIntegrationTestCase extends KernelTestCase
 {
     /**
      * @var string
@@ -48,7 +47,9 @@ abstract class AbstractFunctionalTestCase extends WebTestCase
     public function __construct()
     {
         parent::__construct();
-        static::$client = static::createClient();
+        static::bootKernel([
+            'environment' => 'test'
+        ]);
         static::$container = static::$kernel->getContainer();
         static::$initSqlFilePath = static::$container->getParameter('init_sql_file_path');
         static::$purgeSqlFilePath = static::$container->getParameter('purge_sql_file_path');
@@ -88,20 +89,5 @@ abstract class AbstractFunctionalTestCase extends WebTestCase
                 $statement->execute();
             }
         }
-    }
-
-    /**
-     * Performs user authentication
-     *
-     * @param $username
-     */
-    protected static function authenticate($username)
-    {
-        self::$client->getCookieJar()->clear();
-        $tokenEncoder = self::$container->get('lexik_jwt_authentication.encoder');
-        $token = $tokenEncoder->encode([
-            'username' => $username
-        ]);
-        self::$client->getCookieJar()->set(new Cookie('BEARER', $token));
     }
 }

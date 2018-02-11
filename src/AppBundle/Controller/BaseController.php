@@ -23,10 +23,8 @@ class BaseController extends Controller
 {
     public function handleCommand($command)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
         $commandBus = $this->get('tactician.commandbus');
         $serializer = $this->get('jms_serializer');
-        $em->beginTransaction();
 
         try {
             $result = $commandBus->handle($command);
@@ -35,21 +33,12 @@ class BaseController extends Controller
             $response = new Response($serializedResult, Response::HTTP_NO_CONTENT);
             $response->headers->set('Content-Type', 'application/json');
 
-            $em->flush();
-            $em->commit();
         } catch (\InvalidArgumentException $e) {
             $response = new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
-            $em->rollback();
         } catch (AccessDeniedException $e) {
             $response = new Response($e->getMessage(), Response::HTTP_FORBIDDEN);
-            $em->rollback();
         } catch (\Exception $e) {
             $response = new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
-            $em->rollback();
-        }
-
-        if ($em->isOpen()) {
-            $em->close();
         }
 
         return $response;
@@ -57,9 +46,7 @@ class BaseController extends Controller
 
     public function query(QueryInterface $query, QueryParametersInterface $parameters)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
         $serializer = $this->get('jms_serializer');
-        $em->beginTransaction();
 
         try {
             $result = $query->query($parameters);
@@ -68,23 +55,12 @@ class BaseController extends Controller
             $response = new Response($serializedResult, Response::HTTP_OK);
             $response->headers->set('Content-Type', 'application/json');
 
-
-            $em->flush();
-            $em->commit();
-
         } catch (\InvalidArgumentException $e) {
             $response = new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
-            $em->rollback();
         } catch (AccessDeniedException $e) {
             $response = new Response($e->getMessage(), Response::HTTP_FORBIDDEN);
-            $em->rollback();
         } catch (\Exception $e) {
             $response = new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
-            $em->rollback();
-        }
-
-        if ($em->isOpen()) {
-            $em->close();
         }
 
         return $response;
