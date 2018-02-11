@@ -9,9 +9,9 @@
 namespace Cookway\Domain\Recipe;
 
 /**
- * Interface for Unit repository
+ * Unit repository interface
  *
- * @package Cookway\Domain\Recipe
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
 interface Units
 {

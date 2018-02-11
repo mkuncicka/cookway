@@ -11,6 +11,11 @@ namespace Cookway\Application\Recipe\Query\RecipeListQuery;
 use Cookway\Infrastructure\QueryParametersInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Parameters od recipe list query
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class RecipeListQueryParameters implements QueryParametersInterface
 {
     /**

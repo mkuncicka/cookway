@@ -6,10 +6,11 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Application\Recipe;
+namespace Cookway\Application\Dictionary;
 
 /**
  * View model of dictionary list
+ *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
 class DictionaryListView
@@ -24,7 +25,11 @@ class DictionaryListView
      */
     public $data;
 
-    public function __construct($totalCount, $data)
+    /**
+     * @param int $totalCount
+     * @param DictionaryListItemView[] $data
+     */
+    public function __construct(int $totalCount, array $data)
     {
         $this->totalCount = $totalCount;
         $this->data = $data;

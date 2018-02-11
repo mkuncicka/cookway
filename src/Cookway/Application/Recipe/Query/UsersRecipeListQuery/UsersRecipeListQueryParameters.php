@@ -8,10 +8,14 @@
 
 namespace Cookway\Application\Recipe\Query\UsersRecipeListQuery;
 
-
 use Cookway\Infrastructure\QueryParametersInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Parameters of recipe list for single user
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class UsersRecipeListQueryParameters implements QueryParametersInterface
 {
     /**
@@ -20,9 +24,7 @@ class UsersRecipeListQueryParameters implements QueryParametersInterface
     public $userId;
 
     /**
-     * Creates QueryParameters class from Request
-     * @param Request $request
-     * @return $this
+     * @inheritdoc
      */
     public static function fromRequest(Request $request)
     {

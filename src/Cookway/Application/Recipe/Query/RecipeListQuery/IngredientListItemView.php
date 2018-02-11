@@ -8,7 +8,11 @@
 
 namespace Cookway\Application\Recipe\Query\RecipeListQuery;
 
-
+/**
+ * Single ingredient on the list - view model
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class IngredientListItemView
 {
     /**
@@ -29,7 +33,6 @@ class IngredientListItemView
     public $unitName;
 
     /**
-     * IngredientItemView constructor.
      * @param int $id
      * @param string $name
      * @param float $amount

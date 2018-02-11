@@ -10,6 +10,11 @@ namespace Cookway\Application\Security\Command;
 
 use JMS\Serializer\Annotation as Serializer;
 
+/**
+ * Intention of login
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class Login
 {
     /**
@@ -17,12 +22,17 @@ class Login
      * @var string
      */
     public $username;
+
     /**
      * @Serializer\Type("string")
      * @var string
      */
     public $password;
 
+    /**
+     * @param string $username
+     * @param string $password
+     */
     public function __construct(string $username, string $password)
     {
         $this->username = $username;

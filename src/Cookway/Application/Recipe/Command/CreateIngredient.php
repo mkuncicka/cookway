@@ -6,10 +6,15 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Application\Recipe;
+namespace Cookway\Application\Recipe\Command;
 
 use JMS\Serializer\Annotation as Serializer;
 
+/**
+ * Intention of creating new ingredient
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class CreateIngredient
 {
     /**
@@ -30,6 +35,11 @@ class CreateIngredient
      */
     public $unitId;
 
+    /**
+     * @param string $name
+     * @param float $amount
+     * @param int $unitId
+     */
     public function __construct(string $name, float $amount, int $unitId)
     {
         $this->name = $name;

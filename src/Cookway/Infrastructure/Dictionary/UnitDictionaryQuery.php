@@ -8,14 +8,18 @@
 
 namespace Cookway\Infrastructure\Dictionary;
 
-
-use Cookway\Application\Recipe\DictionaryListItemView;
-use Cookway\Application\Recipe\DictionaryListView;
+use Cookway\Application\Dictionary\DictionaryListItemView;
+use Cookway\Application\Dictionary\DictionaryListView;
 use Cookway\Domain\Recipe\Unit;
 use Cookway\Domain\Recipe\Units;
 use Cookway\Infrastructure\QueryInterface;
 use Cookway\Infrastructure\QueryParametersInterface;
 
+/**
+ * Query class - handles unit dictionary
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class UnitDictionaryQuery implements QueryInterface
 {
     /**
@@ -23,11 +27,20 @@ class UnitDictionaryQuery implements QueryInterface
      */
     private $units;
 
+    /**
+     * @param Units $units
+     */
     public function __construct(Units $units)
     {
         $this->units = $units;
     }
 
+    /**
+     * Returns dictionary of available units in system
+     *
+     * @param QueryParametersInterface $parameters
+     * @return DictionaryListView
+     */
     public function query(QueryParametersInterface $parameters)
     {
         $units = $this->units->getAll();

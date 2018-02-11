@@ -8,7 +8,11 @@
 
 namespace Cookway\Application\Security\Command;
 
-
+/**
+ * Logout intention
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class Logout
 {
 

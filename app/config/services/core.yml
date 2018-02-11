@@ -1,0 +1,16 @@
+services:
+    app.core.users_repository:
+        class: Cookway\Infrastructure\Core\DoctrineUserRepository
+        arguments:
+            - '@doctrine.orm.entity_manager'
+    app.core.security.user_provider:
+        public: true
+        class: Cookway\Application\Security\UserProvider
+        arguments:
+            - '@app.core.users_repository'
+    app.core.security.login_handler:
+        public: true
+        class: Cookway\Application\Security\Command\LoginHandler
+        arguments:
+            - '@app.core.security.user_provider'
+            - '@security.password_encoder'

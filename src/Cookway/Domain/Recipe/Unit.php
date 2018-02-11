@@ -9,7 +9,8 @@
 namespace Cookway\Domain\Recipe;
 
 /**
- * Unit of the ingredient amount
+ * Unit of the ingredient amount - model
+ *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
 class Unit
@@ -23,6 +24,9 @@ class Unit
      */
     private $name;
 
+    /**
+     * @param string $name
+     */
     public function __construct(string $name)
     {
         $this->name = $name;

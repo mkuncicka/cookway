@@ -11,6 +11,11 @@ namespace Cookway\Infrastructure;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Query parameters interface
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 interface QueryParametersInterface
 {
     /**

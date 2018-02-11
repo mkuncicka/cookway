@@ -13,7 +13,7 @@ use Cookway\Domain\Recipe\Units;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Repository class of Units
+ * Units repository
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
@@ -29,6 +29,9 @@ class DoctrineUnitsRepository implements Units
      */
     private $repository;
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;

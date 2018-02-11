@@ -8,7 +8,11 @@
 
 namespace Cookway\Domain\Core;
 
-
+/**
+ * User repository interface
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 interface Users
 {
     /**

@@ -10,6 +10,7 @@ namespace Cookway\Domain\Recipe;
 
 /**
  * Recipe photo model
+ *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
 class Photo
@@ -43,6 +44,13 @@ class Photo
      */
     private $isMain;
 
+    /**
+     * @param string $name
+     * @param string $fileName
+     * @param string $extension
+     * @param Recipe $recipe
+     * @param bool $isMain
+     */
     public function __construct(string $name, string $fileName, string $extension, Recipe $recipe, bool $isMain)
     {
         $this->name = $name;

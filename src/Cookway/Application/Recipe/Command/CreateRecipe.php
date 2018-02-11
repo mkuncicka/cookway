@@ -6,7 +6,7 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Application\Recipe;
+namespace Cookway\Application\Recipe\Command;
 
 use Cookway\Domain\Core\User;
 use JMS\Serializer\Annotation as Serializer;
@@ -25,7 +25,7 @@ class CreateRecipe
     public $title;
 
     /**
-     * @Serializer\Type("array<Cookway\Application\Recipe\CreateIngredient>")
+     * @Serializer\Type("array<Cookway\Application\Recipe\Command\CreateIngredient>")
      * @var CreateIngredient[]
      */
     public $ingredients;
@@ -65,6 +65,15 @@ class CreateRecipe
      */
     public $user;
 
+    /**
+     * @param string $title
+     * @param string $prescription
+     * @param array $ingredients
+     * @param string|null $description
+     * @param int|null $preparationTime
+     * @param string|null $preparationTimeText
+     * @param int|null $photoId
+     */
     public function __construct(string $title, string $prescription, array $ingredients = [], string $description = null,
                                 int $preparationTime = null, string $preparationTimeText = null, int $photoId = null
     )

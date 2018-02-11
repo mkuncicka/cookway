@@ -13,6 +13,11 @@ use Cookway\Application\Recipe\Query\RecipeListQuery\IngredientListView;
 use Cookway\Domain\Recipe\Ingredient;
 use Cookway\Domain\Recipe\Recipe;
 
+/**
+ * Recipe details - view model
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class RecipeDetailsView
 {
     /**
@@ -51,7 +56,6 @@ class RecipeDetailsView
     public $preparationTimeText;
 
     /**
-     * RecipeDetailsView constructor.
      * @param int $id
      * @param string $title
      * @param string $prescription
@@ -71,6 +75,12 @@ class RecipeDetailsView
         $this->ingredients = $ingredients;
     }
 
+    /**
+     * Creates instance of self from Recipe object
+     *
+     * @param Recipe $recipe
+     * @return RecipeDetailsView
+     */
     public static function createFromRecipe(Recipe $recipe)
     {
         $ingredients = [];

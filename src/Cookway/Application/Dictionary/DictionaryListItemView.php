@@ -6,10 +6,11 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Application\Recipe;
+namespace Cookway\Application\Dictionary;
 
 /**
  * View model of dictionary item on the list
+ *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
 class DictionaryListItemView
@@ -24,6 +25,10 @@ class DictionaryListItemView
      */
     public $text;
 
+    /**
+     * @param int $id
+     * @param string $text
+     */
     public function __construct(int $id, string $text)
     {
         $this->id = $id;

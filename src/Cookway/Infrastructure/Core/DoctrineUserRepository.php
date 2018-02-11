@@ -8,11 +8,15 @@
 
 namespace Cookway\Infrastructure\Core;
 
-
 use Cookway\Domain\Core\User;
 use Cookway\Domain\Core\Users;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * User repository
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class DoctrineUserRepository implements Users
 {
     /**
@@ -25,6 +29,9 @@ class DoctrineUserRepository implements Users
      */
     private $repository;
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;

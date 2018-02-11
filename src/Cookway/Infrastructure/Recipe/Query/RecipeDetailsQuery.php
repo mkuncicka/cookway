@@ -14,6 +14,11 @@ use Cookway\Domain\Recipe\Recipes;
 use Cookway\Infrastructure\QueryInterface;
 use Cookway\Infrastructure\QueryParametersInterface;
 
+/**
+ * Query class - handles recipe details
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class RecipeDetailsQuery implements QueryInterface
 {
 
@@ -22,13 +27,16 @@ class RecipeDetailsQuery implements QueryInterface
      */
     private $recipes;
 
+    /**
+     * @param Recipes $recipes
+     */
     public function __construct(Recipes $recipes)
     {
         $this->recipes = $recipes;
     }
 
     /**
-     * Returns queried data
+     * Returns details of the recipe
      *
      * @param RecipeDetailsQueryParameters $parameters
      * @return RecipeDetailsView

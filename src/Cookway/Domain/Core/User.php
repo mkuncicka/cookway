@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class representing user account
+ * Representation of user in system
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */

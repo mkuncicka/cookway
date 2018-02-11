@@ -11,13 +11,16 @@ namespace Cookway\Application\Dictionary\Query;
 use Cookway\Infrastructure\QueryParametersInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Parameters of unit dictionary query
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class UnitDictionaryQueryParameters implements QueryParametersInterface
 {
 
     /**
-     * Creates QueryParameters class from Request
-     * @param Request $request
-     * @return $this
+     * @inheritdoc
      */
     public static function fromRequest(Request $request)
     {

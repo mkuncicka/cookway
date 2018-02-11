@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Recipe model
+ *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
 class Recipe
@@ -62,6 +63,11 @@ class Recipe
      */
     private $author;
 
+    /**
+     * @param string $title
+     * @param string $prescription
+     * @param User $author
+     */
     public function __construct(string $title, string $prescription, User $author)
     {
         $this->title = $title;
@@ -74,6 +80,7 @@ class Recipe
 
     /**
      * Adds ingredient to the recipe
+     *
      * @param Ingredient $ingredient
      * @return $this
      */
@@ -85,6 +92,8 @@ class Recipe
     }
 
     /**
+     * Adds photo to the recipe
+     *
      * @param Photo $photo
      * @return Recipe
      */

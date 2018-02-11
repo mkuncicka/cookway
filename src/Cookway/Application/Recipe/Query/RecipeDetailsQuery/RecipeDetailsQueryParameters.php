@@ -8,10 +8,14 @@
 
 namespace Cookway\Application\Recipe\Query\RecipeDetailsQuery;
 
-
 use Cookway\Infrastructure\QueryParametersInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Parameters of recipe details query
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class RecipeDetailsQueryParameters implements QueryParametersInterface
 {
     /**
@@ -21,9 +25,7 @@ class RecipeDetailsQueryParameters implements QueryParametersInterface
     public $id;
 
     /**
-     * Creates QueryParameters class from Request
-     * @param Request $request
-     * @return $this
+     * @inheritdoc
      */
     public static function fromRequest(Request $request)
     {
