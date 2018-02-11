@@ -6,41 +6,45 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Application\Recipe;
+namespace Cookway\Application\Recipe\Command;
 
 use Cookway\Domain\Recipe\Ingredient;
+use Cookway\Domain\Recipe\Ingredients;
 use Cookway\Domain\Recipe\Recipe;
+use Cookway\Domain\Recipe\Recipes;
 use Cookway\Domain\Recipe\Units;
-use Cookway\Infrastructure\Recipe\DoctrineIngredientsRepository;
-use Cookway\Infrastructure\Recipe\DoctrineRecipesRepository;
 
 /**
- * Class implementing adding new recipe
+ * Adds new recipe
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
 class CreateRecipeHandler
 {
     /**
-     * @var DoctrineRecipesRepository
+     * @var Recipes
      */
-    private $recipesRepository;
+    private $recipes;
     /**
      * @var Units
      */
     private $units;
     /**
-     * @var DoctrineIngredientsRepository
+     * @var Ingredients
      */
     private $ingredients;
 
-    public function __construct(DoctrineRecipesRepository $recipesRepository, Units $units, DoctrineIngredientsRepository $ingredients)
+    public function __construct(Recipes $recipes, Units $units, Ingredients $ingredients)
     {
-        $this->recipesRepository = $recipesRepository;
+        $this->recipes = $recipes;
         $this->units = $units;
         $this->ingredients = $ingredients;
     }
 
+    /**
+     * Method handles command
+     * @param CreateRecipe $command
+     */
     public function handle(CreateRecipe $command)
     {
         $recipe = new Recipe($command->title, $command->prescription, $command->user);
@@ -62,6 +66,6 @@ class CreateRecipeHandler
             $this->ingredients->add($ingredient);
         }
 
-        $this->recipesRepository->add($recipe);
+        $this->recipes->add($recipe);
     }
 }

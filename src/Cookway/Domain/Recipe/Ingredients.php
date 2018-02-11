@@ -8,7 +8,11 @@
 
 namespace Cookway\Domain\Recipe;
 
-
+/**
+ * Ingredient repository interface
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 interface Ingredients
 {
     /**

@@ -9,7 +9,7 @@
 namespace Cookway\Infrastructure;
 
 /**
- * Interface QueryInterface
+ * Query interface
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */

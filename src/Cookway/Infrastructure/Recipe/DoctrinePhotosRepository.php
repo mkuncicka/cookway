@@ -8,11 +8,16 @@
 
 namespace Cookway\Infrastructure\Recipe;
 
-
 use Cookway\Domain\Recipe\Photo;
+use Cookway\Domain\Recipe\Photos;
 use Doctrine\ORM\EntityManagerInterface;
 
-class DoctrinePhotosRepository
+/**
+ * Photos repository
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
+class DoctrinePhotosRepository implements Photos
 {
     /**
      * @var EntityManagerInterface
@@ -24,6 +29,9 @@ class DoctrinePhotosRepository
      */
     private $repository;
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;

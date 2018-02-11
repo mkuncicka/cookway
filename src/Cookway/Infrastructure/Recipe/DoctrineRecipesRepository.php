@@ -13,6 +13,11 @@ use Cookway\Domain\Recipe\Recipe;
 use Cookway\Domain\Recipe\Recipes;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * Recipes repository
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class DoctrineRecipesRepository implements Recipes
 {
     /**
@@ -25,6 +30,9 @@ class DoctrineRecipesRepository implements Recipes
      */
     private $repository;
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -40,9 +48,7 @@ class DoctrineRecipesRepository implements Recipes
     }
 
     /**
-     * Returns all Recipes
-     *
-     * @return Recipe[]
+     * @inheritdoc
      */
     public function getAll()
     {
@@ -50,9 +56,7 @@ class DoctrineRecipesRepository implements Recipes
     }
 
     /**
-     * Returns recipe identified by given id
-     * @param int $id
-     * @return Recipe|null
+     * @inheritdoc
      */
     public function getById(int $id)
     {
@@ -60,9 +64,7 @@ class DoctrineRecipesRepository implements Recipes
     }
 
     /**
-     * Returns all recepies of one user
-     * @param User $user
-     * @return Recipe[]
+     * @inheritdoc
      */
     public function getByUser(User $user)
     {

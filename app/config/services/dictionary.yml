@@ -1,0 +1,6 @@
+services:
+    app.dictionary.units_dictionary_query:
+        public: true
+        class: Cookway\Infrastructure\Dictionary\UnitDictionaryQuery
+        arguments:
+            - '@app.recipe.unit_repository'

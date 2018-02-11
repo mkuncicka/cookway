@@ -11,7 +11,7 @@ namespace Cookway\Domain\Core;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
- * Representation of Role in Application
+ * Representation of role in system
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */

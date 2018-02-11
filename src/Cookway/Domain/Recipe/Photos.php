@@ -6,14 +6,14 @@
  * All Rights Reserved
  */
 
-namespace Cookway\Application\Security\Command;
+namespace Cookway\Domain\Recipe;
 
 /**
- * Handles logout intention
+ * Photo repository interface
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class LogoutHandler
+interface Photos
 {
 
 }

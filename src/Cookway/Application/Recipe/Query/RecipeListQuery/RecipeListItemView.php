@@ -52,7 +52,6 @@ class RecipeListItemView
     public $photoId;
 
     /**
-     * RecipeListItemView constructor.
      * @param int $id
      * @param string $title
      * @param string $description
@@ -75,7 +74,12 @@ class RecipeListItemView
         $this->id = $id;
     }
 
-
+    /**
+     * Creates instance of self from Recipe object
+     *
+     * @param Recipe $recipe
+     * @return RecipeListItemView
+     */
     public static function createFromRecipe(Recipe $recipe)
     {
         $ingredients = [];

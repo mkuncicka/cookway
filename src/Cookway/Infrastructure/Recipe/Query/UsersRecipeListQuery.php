@@ -15,6 +15,10 @@ use Cookway\Domain\Core\Users;
 use Cookway\Domain\Recipe\Recipes;
 use Cookway\Infrastructure\QueryInterface;
 
+/**
+ * Query class - handles list of single user's recipes
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class UsersRecipeListQuery implements QueryInterface
 {
     /**
@@ -27,7 +31,6 @@ class UsersRecipeListQuery implements QueryInterface
     private $users;
 
     /**
-     * UsersRecipeListQuery constructor.
      * @param Recipes $recipes
      * @param Users $users
      */
@@ -38,6 +41,8 @@ class UsersRecipeListQuery implements QueryInterface
     }
 
     /**
+     * Returns list of recipes created by given user
+     *
      * @param UsersRecipeListQueryParameters $parameters
      * @return RecipeListView
      */

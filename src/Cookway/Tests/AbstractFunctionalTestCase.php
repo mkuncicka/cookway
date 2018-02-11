@@ -14,6 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Provides methods for functional tests
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 abstract class AbstractFunctionalTestCase extends WebTestCase
 {
     /**
@@ -38,6 +43,11 @@ abstract class AbstractFunctionalTestCase extends WebTestCase
         static::$entityManager = static::$container->get('doctrine.orm.entity_manager');
     }
 
+    /**
+     * Performs user authentication
+     *
+     * @param $username
+     */
     protected static function authenticate($username)
     {
         self::$client->getCookieJar()->clear();

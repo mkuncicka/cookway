@@ -8,7 +8,7 @@
 
 namespace AppBundle\Controller;
 
-use Cookway\Application\Recipe\CreateRecipe;
+use Cookway\Application\Recipe\Command\CreateRecipe;
 use Cookway\Application\Recipe\Query\RecipeDetailsQuery\RecipeDetailsQueryParameters;
 use Cookway\Application\Recipe\Query\RecipeListQuery\RecipeListQueryParameters;
 use Cookway\Application\Recipe\Query\UsersRecipeListQuery\UsersRecipeListQueryParameters;

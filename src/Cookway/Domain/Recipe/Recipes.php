@@ -8,9 +8,13 @@
 
 namespace Cookway\Domain\Recipe;
 
-
 use Cookway\Domain\Core\User;
 
+/**
+ * Recipe repository interface
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 interface Recipes
 {
     /**

@@ -10,6 +10,7 @@ namespace Cookway\Domain\Recipe;
 
 /**
  * Ingredient model
+ *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
 class Ingredient
@@ -35,6 +36,11 @@ class Ingredient
      */
     private $recipe;
 
+    /**
+     * @param string $name
+     * @param float $amount
+     * @param Unit $unit
+     */
     public function __construct(string $name, float $amount, Unit $unit)
     {
         $this->name = $name;

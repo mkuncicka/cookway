@@ -14,9 +14,13 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * Checks login intention
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class LoginHandler
 {
-
     /**
      * @var UserProviderInterface
      */
@@ -26,6 +30,10 @@ class LoginHandler
      */
     private $encoder;
 
+    /**
+     * @param UserProviderInterface $userProvider
+     * @param UserPasswordEncoder $encoder
+     */
     public function __construct(UserProviderInterface $userProvider, UserPasswordEncoder $encoder)
     {
         $this->userProvider = $userProvider;
@@ -33,6 +41,8 @@ class LoginHandler
     }
 
     /**
+     * Handles login intention
+     *
      * @param Login $command
      */
     public function handle(Login $command)

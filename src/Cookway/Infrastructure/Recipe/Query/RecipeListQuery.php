@@ -17,6 +17,11 @@ use Cookway\Infrastructure\QueryParametersInterface;
 use Cookway\Infrastructure\Recipe\DoctrineRecipesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * Query class - handles recipe list
+ *
+ * @author Magdalena Kuncicka <mkuncicka@gmail.com>
+ */
 class RecipeListQuery implements QueryInterface
 {
     /**
@@ -28,6 +33,10 @@ class RecipeListQuery implements QueryInterface
      */
     private $entityManager;
 
+    /**
+     * @param DoctrineRecipesRepository $recipes
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(DoctrineRecipesRepository $recipes, EntityManagerInterface $entityManager)
     {
         $this->recipes = $recipes;
@@ -35,7 +44,7 @@ class RecipeListQuery implements QueryInterface
     }
 
     /**
-     * Returns queried data
+     * Returns list of recipes
      *
      * @param RecipeListQueryParameters $parameters
      * @return mixed

@@ -1,0 +1,43 @@
+services:
+    app.recipe.ingredients_repository:
+        class: Cookway\Infrastructure\Recipe\DoctrineIngredientsRepository
+        arguments:
+            - '@doctrine.orm.entity_manager'
+    app.recipe.unit_repository:
+            class: Cookway\Infrastructure\Recipe\DoctrineUnitsRepository
+            arguments:
+                - '@doctrine.orm.entity_manager'
+    app.recipe.recipes_repository:
+        class: Cookway\Infrastructure\Recipe\DoctrineRecipesRepository
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+    app.recipe.photos_repository:
+        class: Cookway\Infrastructure\Recipe\DoctrinePhotosRepository
+        arguments:
+            - '@doctrine.orm.entity_manager'
+    app.recipe.create_recipe_handler:
+        public: true
+        class: Cookway\Application\Recipe\Command\CreateRecipeHandler
+        arguments:
+            - '@app.recipe.recipes_repository'
+            - '@app.recipe.unit_repository'
+            - '@app.recipe.ingredients_repository'
+        tags:
+            - { name: tactician.handler, command: Cookway\Application\Recipe\Command\CreateRecipe }
+    app.recipe.recipe_list_query:
+        public: true
+        class: Cookway\Infrastructure\Recipe\Query\RecipeListQuery
+        arguments:
+            - '@app.recipe.recipes_repository'
+            - '@doctrine.orm.entity_manager'
+    app.recipe.recipe_details_query:
+        public: true
+        class: Cookway\Infrastructure\Recipe\Query\RecipeDetailsQuery
+        arguments:
+            - '@app.recipe.recipes_repository'
+    app.recipe.users_recipe_query:
+        public: true
+        class: Cookway\Infrastructure\Recipe\Query\UsersRecipeListQuery
+        arguments:
+            - '@app.recipe.recipes_repository'
+            - '@app.core.users_repository'
