@@ -38,18 +38,15 @@ class CreateRecipeHandlerTest extends AbstractIntegrationTestCase
      */
     public function shouldCreateRecipe()
     {
-        static::$entityManager->beginTransaction();
+
         $command = $this->prepareCommand();
-        $result = $this->testObject->handle($command);
-        static::$entityManager->flush();
-        static::$entityManager->commit();
-        if(static::$entityManager->isOpen()) {
-            static::$entityManager->close();
-        }
+        $commandBus = self::$container->get('tactician.commandbus');
+        $result = $commandBus->handle($command);
 
         $this->assertNull($result);
         $recipes = $this->recipes->getAll();
         $assertedRecipe = null;
+
         /** @var Recipe $recipe */
         foreach ($recipes as $recipe) {
             if ($recipe->getTitle() === 'Extra recipe') {
@@ -57,10 +54,10 @@ class CreateRecipeHandlerTest extends AbstractIntegrationTestCase
                 break;
             }
         }
-        $this->assertInstanceOf(Recipe::class , $recipe);
-        $this->assertEquals('long description', $recipe->getDescription());
-        /** @var Ingredient $ingredient */
-        $this->assertCount(2 , $recipe->getIngredients());
+
+        $this->assertInstanceOf(Recipe::class , $assertedRecipe);
+        $this->assertEquals('long description', $assertedRecipe->getDescription());
+        $this->assertCount(2 , $assertedRecipe->getIngredients());
     }
 
     public function prepareCommand()
