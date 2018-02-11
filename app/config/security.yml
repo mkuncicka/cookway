@@ -15,13 +15,14 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        login:
-            pattern: ^/api/security/login
-            anonymous: ~
         api_doc:
             pattern: ^/api/doc$
             anonymous: true
+            logout_on_user_change: true
+        login:
+            pattern: ^/api/security/login
+            logout_on_user_change: true
+            anonymous: ~
         api:
             pattern: ^/api
             guard:
