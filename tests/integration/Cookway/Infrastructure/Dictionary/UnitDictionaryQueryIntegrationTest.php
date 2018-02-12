@@ -19,7 +19,7 @@ use Cookway\Tests\AbstractIntegrationTestCase;
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class UnitDictionaryQueryTest extends AbstractIntegrationTestCase
+class UnitDictionaryQueryIntegrationTest extends AbstractIntegrationTestCase
 {
     /**
      * @var Units

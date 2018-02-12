@@ -21,7 +21,7 @@ use Cookway\Tests\AbstractIntegrationTestCase;
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class RecipeListQueryTest extends AbstractIntegrationTestCase
+class RecipeListQueryIntegrationTest extends AbstractIntegrationTestCase
 {
     /**
      * @var RecipeListQuery
@@ -37,7 +37,7 @@ class RecipeListQueryTest extends AbstractIntegrationTestCase
     {
         parent::setUp($path);
         $this->recipes = self::$container->get('app.recipe.recipes_repository');
-        $this->testObject = new RecipeListQuery($this->recipes, self::$entityManager);
+        $this->testObject = new RecipeListQuery($this->recipes);
     }
 
     /**

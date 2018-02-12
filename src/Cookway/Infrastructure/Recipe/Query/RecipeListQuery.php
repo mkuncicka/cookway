@@ -12,6 +12,7 @@ use Cookway\Application\Recipe\Query\RecipeListQuery\RecipeListItemView;
 use Cookway\Application\Recipe\Query\RecipeListQuery\RecipeListQueryParameters;
 use Cookway\Application\Recipe\Query\RecipeListQuery\RecipeListView;
 use Cookway\Domain\Recipe\Recipe;
+use Cookway\Domain\Recipe\Recipes;
 use Cookway\Infrastructure\QueryInterface;
 use Cookway\Infrastructure\QueryParametersInterface;
 use Cookway\Infrastructure\Recipe\DoctrineRecipesRepository;
@@ -25,22 +26,16 @@ use Doctrine\ORM\EntityManagerInterface;
 class RecipeListQuery implements QueryInterface
 {
     /**
-     * @var DoctrineRecipesRepository
+     * @var Recipes
      */
     private $recipes;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
 
     /**
-     * @param DoctrineRecipesRepository $recipes
-     * @param EntityManagerInterface $entityManager
+     * @param Recipes $recipes
      */
-    public function __construct(DoctrineRecipesRepository $recipes, EntityManagerInterface $entityManager)
+    public function __construct(Recipes $recipes)
     {
         $this->recipes = $recipes;
-        $this->entityManager = $entityManager;
     }
 
     /**
