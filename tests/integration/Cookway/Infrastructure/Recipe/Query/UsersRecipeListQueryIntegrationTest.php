@@ -22,7 +22,7 @@ use Cookway\Tests\AbstractIntegrationTestCase;
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class UsersRecipeListQueryTest extends AbstractIntegrationTestCase
+class UsersRecipeListQueryIntegrationTest extends AbstractIntegrationTestCase
 {
     /**
      * @var UsersRecipeListQuery

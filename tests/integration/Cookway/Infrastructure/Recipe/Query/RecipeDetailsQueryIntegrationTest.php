@@ -20,7 +20,7 @@ use Cookway\Tests\AbstractIntegrationTestCase;
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class RecipeDetailsQueryTest extends AbstractIntegrationTestCase
+class RecipeDetailsQueryIntegrationTest extends AbstractIntegrationTestCase
 {
     /**
      * @var RecipeDetailsQuery

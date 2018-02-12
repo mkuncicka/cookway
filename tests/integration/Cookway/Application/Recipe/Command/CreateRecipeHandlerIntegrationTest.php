@@ -17,7 +17,7 @@ use Cookway\Tests\AbstractIntegrationTestCase;
  *
  * @author Magdalena Kuncicka <mkuncicka@gmail.com>
  */
-class CreateRecipeHandlerTest extends AbstractIntegrationTestCase
+class CreateRecipeHandlerIntegrationTest extends AbstractIntegrationTestCase
 {
     private $testObject;
     private $recipes;
